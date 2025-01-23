@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-
-const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
+import { addProduct } from "../../api";
 
 const DashAddProduct = () => {
   const { accessToken } = useSelector((state) => state.user);
@@ -29,56 +28,29 @@ const DashAddProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // Set loading to true when submitting
-
-    const colorArray = formData.color.split(",").map((c) => c.trim());
-    const sizeArray = formData.size.split(",").map((s) => s.trim());
-
-    const data = new FormData();
-    data.append("name", formData.name);
-    data.append("description", formData.description);
-    data.append("price", formData.price);
-    data.append("stock", formData.stock);
-    data.append("category[name]", formData.categoryName);
-    data.append("category[type]", formData.categoryType);
-    data.append("color", JSON.stringify(colorArray));
-    data.append("size", JSON.stringify(sizeArray));
-    data.append("productImage", formData.productImage);
+    setLoading(true);
 
     try {
-      //   const response = await fetch("https://e-commerce-app-pearl-six.vercel.app/api/product/addProduct", {
-      const response = await fetch(`${baseUrl}/api/product/addProduct`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: data,
+      const responseData = await addProduct(formData, accessToken);
+
+      alert("Product added successfully!");
+
+      // Optionally reset the form
+      setFormData({
+        name: "",
+        description: "",
+        productImage: null,
+        price: "",
+        stock: "",
+        categoryName: "",
+        categoryType: "",
+        color: "",
+        size: "",
       });
-
-      const responseData = await response.json();
-
-      if (response.ok) {
-        setLoading(false);
-        alert("Product added successfully!");
-
-        // Optionally, you can reset the form here
-        setFormData({
-          name: "",
-          description: "",
-          productImage: null,
-          price: "",
-          stock: "",
-          categoryName: "",
-          categoryType: "",
-          color: "",
-          size: "",
-        });
-      } else {
-        throw new Error(responseData.message || "Failed to add product");
-      }
     } catch (error) {
       console.error("Error adding product:", error.message);
       alert("Failed to add product: " + error.message);
+    } finally {
       setLoading(false);
     }
   };
@@ -144,7 +116,6 @@ const DashAddProduct = () => {
             onChange={handleChange}
             value={formData.categoryType}
           />
-
           <input
             type="text"
             name="color"
