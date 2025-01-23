@@ -6,7 +6,11 @@ import {
   deleteComment,
 } from "./CommentApi";
 import { logoutUser } from "./HeaderApi.jsx";
-import { getProductsByCategory, fetchProductsByCategory } from "./HomeApi";
+import {
+  getProductsByCategory,
+  fetchProductsByCategory,
+  fetchProducts,
+} from "./HomeApi";
 
 export {
   addComment,
@@ -18,4 +22,5 @@ export {
   //
   getProductsByCategory,
   fetchProductsByCategory,
+  fetchProducts,
 };

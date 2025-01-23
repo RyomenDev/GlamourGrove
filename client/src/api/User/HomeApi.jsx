@@ -28,3 +28,21 @@ export const fetchProductsByCategory = async (categoryType) => {
     throw error;
   }
 };
+
+// Fetch products by category. This function is used in the Gallery component
+export const fetchProducts = async (category) => {
+  try {
+    let url;
+    if (category === "All") {
+      url = `${baseUrl}/api/product/getAllProducts?categoryType=Men`; // Default to 'Men' for "All"
+    } else {
+      url = `${baseUrl}/api/product/getAllProducts?categoryName=${category}`;
+    }
+
+    const response = await axios.get(url);
+    return response.data.products; // Assuming the products are in the `products` field
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    throw error;
+  }
+};

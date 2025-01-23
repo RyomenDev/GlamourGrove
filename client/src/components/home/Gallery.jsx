@@ -1,40 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
+import { fetchProducts } from "../../api/User";
 
 const Gallery = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetchProducts(selectedCategory);
+    const getProducts = async () => {
+      setLoading(true); // Start loading
+      try {
+        const products = await fetchProducts(category); // Fetch products using the API function
+        setImages(products); // Update the state with fetched products
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      } finally {
+        setLoading(false); // End loading
+      }
+    };
+
+    getProducts();
   }, [selectedCategory]);
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
   };
-
-const fetchProducts = async (category) => {
-    try {
-      let url;
-      if (category === 'All') {
-        url = `${baseUrl}/api/product/getAllProducts?categoryType=Men`;
-      } else {
-        url = `${baseUrl}/api/product/getAllProducts?categoryName=${category}`;
-      }
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error('Failed to fetch products');
-      }
-      const data = await response.json();
-      setImages(data.products);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  
 
   return (
     <div className="py-10 dark:bg-[rgb(16,23,42)] ">
@@ -76,9 +68,13 @@ const fetchProducts = async (category) => {
         </button>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-10 px-16">
-      {images.map((img) => (
+        {images.map((img) => (
           <Link key={img._id} to={`/product/${img._id}`}>
-            <img className="h-80 w-80 rounded-lg" src={img.productImage} alt={img.name} />
+            <img
+              className="h-80 w-80 rounded-lg"
+              src={img.productImage}
+              alt={img.name}
+            />
           </Link>
         ))}
       </div>
