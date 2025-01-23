@@ -1,10 +1,17 @@
-import { addProduct } from "./Admin/AddProducts";
+import { addProduct } from "./Admin/AddProductsApi";
 import {
   fetchUsers,
   fetchProducts,
   fetchCountProducts,
-} from "./Admin/BoardComp";
-import { fetchCommentsApi, deleteCommentApi } from "./Admin/Comments.jsx";
+} from "./Admin/BoardCompApi";
+import {
+  fetchCommentsPageApi,
+  deleteCommentByIdApi,
+} from "./Admin/CommentsApi";
+import {
+  fetchProductsPageApi,
+  deleteProductByIdApi,
+} from "./Admin/ProductsApi";
 
 export {
   addProduct,
@@ -14,6 +21,9 @@ export {
   fetchCountProducts,
   fetchComments,
   //
-  fetchCommentsApi,
-  deleteCommentApi,
+  fetchCommentsPageApi,
+  deleteCommentByIdApi,
+  //
+  fetchProductsPageApi,
+  deleteProductByIdApi,
 };

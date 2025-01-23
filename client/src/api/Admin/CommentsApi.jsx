@@ -4,7 +4,7 @@ import conf from "../conf/conf";
 const baseUrl = conf.SERVER_API_URL;
 
 // Fetch all comments with pagination
-export const fetchCommentsApi = async (accessToken, currentPage, perPage) => {
+export const fetchCommentsPageApi = async (accessToken, currentPage, perPage) => {
   try {
     const response = await axios.get(`${baseUrl}/api/comment/getAllComment`, {
       params: { page: currentPage, perPage },
@@ -20,7 +20,7 @@ export const fetchCommentsApi = async (accessToken, currentPage, perPage) => {
 };
 
 // Delete a specific comment by ID
-export const deleteCommentApi = async (accessToken, commentId) => {
+export const deleteCommentByIdApi = async (accessToken, commentId) => {
   try {
     const response = await axios.delete(
       `${baseUrl}/api/comment/deleteComment/${commentId}`,

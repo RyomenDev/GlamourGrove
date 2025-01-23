@@ -2,7 +2,7 @@ import { Button, Modal, Table } from "flowbite-react";
 import React, { useEffect, useState } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { useSelector } from "react-redux";
-import { fetchCommentsApi, deleteCommentApi } from "../../api";
+import { fetchCommentsPageApi, deleteCommentByIdApi } from "../../api";
 
 const DashComments = () => {
   const { currentUser, accessToken } = useSelector((state) => state.user);
@@ -20,7 +20,7 @@ const DashComments = () => {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const data = await fetchCommentsApi(accessToken, currentPage, perPage);
+        const data = await fetchCommentsPageApi(accessToken, currentPage, perPage);
         setComments(data.comments);
         setTotalPages(Math.ceil(data.totalComments / perPage));
       } catch (error) {
@@ -33,7 +33,7 @@ const DashComments = () => {
 
   const handleDeleteComment = async () => {
     try {
-      await deleteCommentApi(accessToken, commentId);
+      await deleteCommentByIdApi(accessToken, commentId);
       setComments((prev) =>
         prev.filter((comment) => comment._id !== commentId)
       );
