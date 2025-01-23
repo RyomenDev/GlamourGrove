@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import OrderCard from "./OrderCard";
-import { fetchOrders } from "../../api";
+import { fetchOrders } from "../../api/Admin";
 
 const DashTransaction = () => {
   const [isAction, setIsAction] = useState(false);

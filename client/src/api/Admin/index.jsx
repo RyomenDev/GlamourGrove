@@ -1,22 +1,22 @@
-import { addProduct } from "./Admin/AddProductsApi";
+import { addProduct } from "./AddProductsApi";
 import {
   fetchUsers,
   fetchProducts,
   fetchCountProducts,
-} from "./Admin/BoardCompApi";
+} from "./BoardCompApi";
 import {
   fetchCommentsPageApi,
   deleteCommentByIdApi,
-} from "./Admin/CommentsApi";
+} from "./CommentsApi";
 import {
   fetchProductsPageApi,
   deleteProductByIdApi,
-} from "./Admin/ProductsApi";
-import { updateProfileApi, updateAvatarApi } from "./Admin/ProfileApi";
-import { signOutApi } from "./Admin/SidebarApi";
-import { fetchOrders } from "./Admin/TransactionApi";
-import { fetchUsersByPage, deleteUserByUserId } from "./Admin/UsersApi";
-import { fetchProductDetails, updateOrderStatus } from "./Admin/OrderCardApi";
+} from "./ProductsApi";
+import { updateProfileApi, updateAvatarApi } from "./ProfileApi";
+import { signOutApi } from "./SidebarApi";
+import { fetchOrders } from "./TransactionApi";
+import { fetchUsersByPage, deleteUserByUserId } from "./UsersApi";
+import { fetchProductDetails, updateOrderStatus } from "./OrderCardApi";
 
 export {
   addProduct,

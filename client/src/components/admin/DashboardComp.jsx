@@ -14,7 +14,7 @@ import {
   fetchProductsApi,
   fetchProductCountsApi,
   fetchCommentsApi,
-} from "../../api";
+} from "../../api/Admin";
 
 const DashboardComp = () => {
   const [users, setUsers] = useState([]);

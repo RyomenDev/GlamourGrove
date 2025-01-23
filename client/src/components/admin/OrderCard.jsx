@@ -1,7 +1,7 @@
 import { Button, Card } from "flowbite-react";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { fetchProductDetails, updateOrderStatus } from "../../api/OrderCardApi";
+import { fetchProductDetails, updateOrderStatus } from "../../api/Admin";
 
 import avatar from "../../assets/avatar.jpeg";
 

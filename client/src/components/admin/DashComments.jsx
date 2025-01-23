@@ -2,7 +2,7 @@ import { Button, Modal, Table } from "flowbite-react";
 import React, { useEffect, useState } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { useSelector } from "react-redux";
-import { fetchCommentsPageApi, deleteCommentByIdApi } from "../../api";
+import { fetchCommentsPageApi, deleteCommentByIdApi } from "../../api/Admin";
 
 const DashComments = () => {
   const { currentUser, accessToken } = useSelector((state) => state.user);

@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "../../redux/user/userSlice";
-import { signOutApi } from "../../api"
+import { signOutApi } from "../../api/Admin"
 
 const DashSidebar = () => {
   const location = useLocation();

@@ -7,7 +7,7 @@ import {
   updateStart,
   updateSuccess,
 } from "../../redux/user/userSlice";
-import { updateProfileApi, updateAvatarApi } from "../../api";
+import { updateProfileApi, updateAvatarApi } from "../../api/Admin";
 
 const DashProfile = () => {
   const { currentUser, error, loading, accessToken } = useSelector(

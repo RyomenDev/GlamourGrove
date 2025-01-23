@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { addProduct } from "../../api";
+import { addProduct } from "../../api/Admin";
 
 const DashAddProduct = () => {
   const { accessToken } = useSelector((state) => state.user);

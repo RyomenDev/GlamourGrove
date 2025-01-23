@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Table } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { fetchProductsPageApi, deleteProductByIdApi } from "../../api";
+import { fetchProductsPageApi, deleteProductByIdApi } from "../../api/Admin";
 
 const DashProducts = () => {
   const [products, setProducts] = useState([]);

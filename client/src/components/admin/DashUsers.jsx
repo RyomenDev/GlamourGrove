@@ -5,8 +5,8 @@ import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import { fetchUsersByPage, deleteUserByUserId } from "../../api";
 import avatar from "../../assets/avatar.jpeg";
+import { fetchUsersByPage, deleteUserByUserId } from "../../api/Admin";
 
 const DashUsers = () => {
   const { currentUser, accessToken } = useSelector((state) => state.user);
