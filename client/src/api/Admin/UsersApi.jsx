@@ -1,6 +1,7 @@
 import axios from "axios";
+import conf from "../conf/conf";
 
-const baseUrl = import.meta.env.VITE_BASE_URL; 
+const baseUrl = conf.SERVER_API_URL;
 
 // Fetch users based on pagination
 export const fetchUsersByPage = async (accessToken, currentPage, perPage) => {
@@ -38,4 +39,3 @@ export const deleteUserByUserId = async (accessToken, userId) => {
     throw error;
   }
 };
-

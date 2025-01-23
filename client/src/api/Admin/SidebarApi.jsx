@@ -1,7 +1,7 @@
-// src/api/SideBarApi.jsx
 import axios from "axios";
+import conf from "../conf/conf";
 
-const baseUrl = import.meta.env.VITE_BASE_URL;
+const baseUrl = conf.SERVER_API_URL;
 
 export const signOutApi = async (accessToken) => {
   try {
