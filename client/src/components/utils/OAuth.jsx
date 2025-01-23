@@ -1,50 +1,42 @@
-import { useDispatch } from "react-redux"
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { GoogleAuthProvider, getAuth, signInWithPopup, } from "firebase/auth";
-import { app } from "../../firebase"
+import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
+import { app } from "../../firebase";
 import { signInSuccess } from "../../redux/user/userSlice";
-
-const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
+import { googleOAuthApi } from "../../api/User";
 
 export default function OAuth() {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    const handleGoogleClick = async () => {
-        try {
-            const provider = new GoogleAuthProvider();
-            const auth = getAuth(app);
+  const handleGoogleClick = async () => {
+    try {
+      const provider = new GoogleAuthProvider();
+      const auth = getAuth(app);
 
-            const result = await signInWithPopup(auth, provider);
-            const res = await fetch(`${baseUrl}/api/users/google`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    fullName: result.user.displayName,
-                    username: result.user.displayName,
-                    email: result.user.email,
-                }),
-            });
+      const result = await signInWithPopup(auth, provider);
 
-            const data = await res.json();
-            console.log(data);
-            const { user, accessToken } = data.data; // Check if accessToken is present in the correct structure
-            dispatch(signInSuccess({ user, accessToken }));
-            
-            navigate('/');
-        } catch (error) {
-            console.log('could not login with google', error);
-        }
+      // Extract user details
+      const userDetails = {
+        fullName: result.user.displayName,
+        username: result.user.displayName,
+        email: result.user.email,
+      };
+
+      // Make API call using the utility
+      const { user, accessToken } = await googleOAuthApi(userDetails);
+
+      // Dispatch the login action and navigate
+      dispatch(signInSuccess({ user, accessToken }));
+      navigate("/");
+    } catch (error) {
+      console.log("Could not login with Google:", error);
     }
+  };
 
-    return(
-        <button
-        type="button"
-        onClick={handleGoogleClick}
-        >
-            Sign in with Google
-        </button>
-    )
+  return (
+    <button type="button" onClick={handleGoogleClick}>
+      Sign in with Google
+    </button>
+  );
 }

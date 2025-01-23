@@ -12,6 +12,7 @@ import {
   fetchProducts,
   fetchAllProductsByPage,
 } from "./HomeApi";
+import { googleOAuthApi } from "./UtilsApi";
 
 export {
   addComment,
@@ -25,4 +26,6 @@ export {
   fetchProductsByCategory,
   fetchProducts,
   fetchAllProductsByPage,
+  //
+  googleOAuthApi,
 };
