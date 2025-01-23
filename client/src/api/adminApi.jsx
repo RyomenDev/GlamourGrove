@@ -1,4 +1,6 @@
+import axios from "axios";
 import conf from "../conf/conf";
+
 const baseUrl = conf.SERVER_API_URL;
 
 export const addProduct = async (formData, accessToken) => {
@@ -11,99 +13,98 @@ export const addProduct = async (formData, accessToken) => {
   data.append("category[type]", formData.categoryType);
 
   const colorArray = formData.color.split(",").map((c) => c.trim());
-  const sizeArray = formData.size.split(",").map((s) => c.trim());
+  const sizeArray = formData.size.split(",").map((s) => s.trim());
 
   data.append("color", JSON.stringify(colorArray));
   data.append("size", JSON.stringify(sizeArray));
   data.append("productImage", formData.productImage);
 
   try {
-    const response = await fetch(`${baseUrl}/api/product/addProduct`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: data,
-    });
+    const response = await axios.post(
+      `${baseUrl}/api/product/addProduct`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
 
-    const responseData = await response.json();
-
-    if (!response.ok) {
-      throw new Error(responseData.message || "Failed to add product");
-    }
-
-    return responseData;
+    return response.data;
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error(error.response?.data?.message || "Failed to add product");
   }
 };
 
 export const fetchUsers = async (accessToken, perPage = 5) => {
   try {
-    const res = await fetch(
-      `${baseUrl}/api/users/getUsers?perPage=${perPage}`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.message);
-    return data;
+    const response = await axios.get(`${baseUrl}/api/users/getUsers`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      params: {
+        perPage,
+      },
+    });
+
+    return response.data;
   } catch (error) {
     console.error("Error fetching users:", error);
-    throw error;
+    throw new Error(error.response?.data?.message || "Failed to fetch users");
   }
 };
 
 export const fetchProducts = async (accessToken, perPage = 5) => {
   try {
-    const res = await fetch(
-      `${baseUrl}/api/product/getAllProducts?perPage=${perPage}`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.message);
-    return data;
+    const response = await axios.get(`${baseUrl}/api/product/getAllProducts`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      params: {
+        perPage,
+      },
+    });
+
+    return response.data;
   } catch (error) {
     console.error("Error fetching products:", error);
-    throw error;
+    throw new Error(
+      error.response?.data?.message || "Failed to fetch products"
+    );
   }
 };
 
 export const fetchCountProducts = async (accessToken) => {
   try {
-    const res = await fetch(`${baseUrl}/api/product/countProduct`, {
+    const response = await axios.get(`${baseUrl}/api/product/countProduct`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.message);
-    return data;
+
+    return response.data;
   } catch (error) {
     console.error("Error fetching product counts:", error);
-    throw error;
+    throw new Error(
+      error.response?.data?.message || "Failed to fetch product counts"
+    );
   }
 };
 
 export const fetchComments = async (accessToken) => {
   try {
-    const res = await fetch(`${baseUrl}/api/comment/getAllComment`, {
+    const response = await axios.get(`${baseUrl}/api/comment/getAllComment`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.message);
-    return data;
+
+    return response.data;
   } catch (error) {
     console.error("Error fetching comments:", error);
-    throw error;
+    throw new Error(
+      error.response?.data?.message || "Failed to fetch comments"
+    );
   }
 };
