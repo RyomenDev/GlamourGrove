@@ -2,14 +2,13 @@ import { Button, Modal, Table } from "flowbite-react";
 import React, { useEffect, useState } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { useSelector } from "react-redux";
-
-const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
+import { fetchCommentsApi, deleteCommentApi } from "../../api";
 
 const DashComments = () => {
   const { currentUser, accessToken } = useSelector((state) => state.user);
   const [comments, setComments] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [commentId, setCommentIdToDelete] = useState('');
+  const [commentId, setCommentIdToDelete] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const perPage = 9;
@@ -18,46 +17,30 @@ const DashComments = () => {
     fetchComments();
   }, [currentPage]);
 
-  const fetchComments = async () => {
-    try {
-      const response = await fetch(
-        `${baseUrl}/api/comment/getAllComment?page=${currentPage}&perPage=${perPage}`,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch Comments");
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const data = await fetchCommentsApi(accessToken, currentPage, perPage);
+        setComments(data.comments);
+        setTotalPages(Math.ceil(data.totalComments / perPage));
+      } catch (error) {
+        console.error("Error fetching comments:", error);
       }
-      const data = await response.json();
-      setComments(data.comments);
-      setTotalPages(Math.ceil(data.totalComments / perPage));
-    } catch (error) {
-      console.error("Errro fetching Comments", error);
-    }
-  };
+    };
+
+    fetchComments();
+  }, [accessToken, currentPage]);
 
   const handleDeleteComment = async () => {
     try {
-      const response = await fetch(`${baseUrl}/api/comment/deleteComment/${commentId}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      const data = await response.json();
-      if (response.ok) {
-        setComments((prev) => prev.filter((comment) => comment._id !== commentId));
-        setShowModal(false);
-      } else {
-        console.log(data.message);
-      }
+      await deleteCommentApi(accessToken, commentId);
+      setComments((prev) =>
+        prev.filter((comment) => comment._id !== commentId)
+      );
+      setShowModal(false);
     } catch (error) {
-      console.error("Error deleting Comment:", error);
-      alert("Failed to delete Comment: " + error.message);
+      console.error("Error deleting comment:", error);
+      alert("Failed to delete comment: " + error.message);
     }
   };
 
@@ -73,7 +56,7 @@ const DashComments = () => {
       {currentUser.isAdmin && comments.length > 0 ? (
         <>
           <Table hoverable className="shadow-md">
-          <Table.Head>
+            <Table.Head>
               <Table.HeadCell>Date updated</Table.HeadCell>
               <Table.HeadCell>Comment content</Table.HeadCell>
               <Table.HeadCell>Number of likes</Table.HeadCell>
@@ -87,12 +70,12 @@ const DashComments = () => {
                   <Table.Cell>
                     {new Date(comment.createdAt).toLocaleDateString()}
                   </Table.Cell>
-                  
+
                   <Table.Cell>{comment.content}</Table.Cell>
                   <Table.Cell>{comment.numberOfLikes}</Table.Cell>
                   <Table.Cell>{comment.productId}</Table.Cell>
                   <Table.Cell>{comment.userId}</Table.Cell>
-                  
+
                   <Table.Cell>
                     <span
                       onClick={() => {

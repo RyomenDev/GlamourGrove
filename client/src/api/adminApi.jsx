@@ -108,3 +108,40 @@ export const fetchComments = async (accessToken) => {
     );
   }
 };
+
+// Fetch all comments with pagination
+export const fetchCommentsApi = async (accessToken, currentPage, perPage) => {
+  try {
+    const response = await axios.get(
+      `${baseUrl}/api/comment/getAllComment`,
+      {
+        params: { page: currentPage, perPage },
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching comments:", error.message);
+    throw error;
+  }
+};
+
+// Delete a specific comment by ID
+export const deleteCommentApi = async (accessToken, commentId) => {
+  try {
+    const response = await axios.delete(
+      `${baseUrl}/api/comment/deleteComment/${commentId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting comment:", error.message);
+    throw error;
+  }
+};
