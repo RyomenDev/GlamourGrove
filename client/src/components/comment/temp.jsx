@@ -29,45 +29,78 @@ const CommentSection = ({ productId }) => {
       return;
     }
     try {
-      const data = await addComment(productId, comment, accessToken);
-      setComments([...comments, data.data]);
-      setComment("");
-      setCommentError(null);
+      const res = await fetch(
+        `${baseUrl}/api/comment/addComment/${productId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: accessToken ? `Bearer ${accessToken}` : "",
+          },
+          body: JSON.stringify({
+            content: comment,
+          }),
+        }
+      );
+      const data = await res.json();
+      if (res.ok) {
+        setComments([...comments, data.data]);
+        setComment("");
+        setCommentError(null);
+      }
     } catch (error) {
       setCommentError(error.message);
     }
   };
 
   useEffect(() => {
-    const fetchComments = async () => {
+    const getComments = async () => {
       try {
-        const data = await getComments(productId);
-        setComments(data.data);
+        const res = await fetch(
+          `${baseUrl}/api/comment/getProductComment/${productId}`
+        );
+        if (res.ok) {
+          const data = await res.json();
+          setComments(data.data);
+        }
       } catch (error) {
         console.log(error.message);
       }
     };
-    fetchComments();
+    getComments();
   }, [productId]);
 
   const handleLike = async (commentId) => {
-    if (!currentUser) {
-      navigate("/login");
-      return;
-    }
     try {
-      const data = await likeComment(commentId, accessToken);
-      setComments(
-        comments.map((comment) =>
-          comment._id === commentId
-            ? {
-                ...comment,
-                likes: data.likes,
-                numberOfLikes: data.likes.length,
-              }
-            : comment
-        )
+      if (!currentUser) {
+        navigate("/login");
+        return;
+      }
+      const res = await fetch(
+        `${baseUrl}/api/comment/likeComment/${commentId}`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
       );
+
+      if (res.ok) {
+        const com = await res.json();
+        const data = com.data;
+        setComments(
+          comments.map((comment) =>
+            comment._id === commentId
+              ? {
+                  ...comment,
+                  likes: data.likes,
+                  numberOfLikes: data.likes.length,
+                }
+              : comment
+          )
+        );
+      }
     } catch (error) {
       console.log(error.message);
     }
@@ -88,8 +121,19 @@ const CommentSection = ({ productId }) => {
         navigate("/login");
         return;
       }
-      await deleteComment(commentId, accessToken);
-      setComments(comments.filter((comment) => comment._id !== commentId));
+      const res = await fetch(
+        `${baseUrl}/api/comment/deleteComment/${commentId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: accessToken ? `Bearer ${accessToken}` : "",
+          },
+        }
+      );
+      if (res.ok) {
+        const data = await res.json();
+        setComments(comments.filter((comment) => comment._id !== commentId));
+      }
     } catch (error) {
       console.log(error.message);
     }

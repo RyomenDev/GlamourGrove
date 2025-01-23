@@ -4,8 +4,12 @@ import moment from 'moment';
 import { useSelector } from "react-redux";
 import { FaThumbsUp } from "react-icons/fa";
 import { Button, Textarea } from "flowbite-react";
-
-const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
+import {
+  getUserById,
+  editComment,
+  likeComment,
+  deleteComment,
+} from "../../api/User";
 
 const Comment = ({ comment, onLike, onEdit, onDelete }) => {
   const [user, setUser] = useState({});
@@ -14,18 +18,15 @@ const Comment = ({ comment, onLike, onEdit, onDelete }) => {
   const [editedContent, setEditedContent] = useState(comment.content);
 
   useEffect(() => {
-    const getUser = async () => {
+    const fetchUser = async () => {
       try {
-        const res = await fetch(`${baseUrl}/api/users/getUserById/${comment.userId}`);
-        const data = await res.json();
-        if (res.ok) {
-          setUser(data.data);
-        }
+        const userData = await getUserById(comment.userId);
+        setUser(userData.data);
       } catch (error) {
-        console.log(error.message);
+        console.error("Error fetching user:", error);
       }
     };
-    getUser();
+    fetchUser();
   }, [comment]);
 
   const handleEdit = () => {
@@ -35,22 +36,15 @@ const Comment = ({ comment, onLike, onEdit, onDelete }) => {
   //console.log(comment);
   const handleSave = async () => {
     try {
-      const res = await fetch(`${baseUrl}/api/comment/editComment/${comment._id}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`
-        },
-        body: JSON.stringify({
-          content: editedContent,
-        }),
-      });
-      if (res.ok) {
-        setIsEditing(false);
-        onEdit(comment, editedContent);
-      }
+      const updatedComment = await editComment(
+        comment._id,
+        editedContent,
+        accessToken
+      );
+      setIsEditing(false);
+      onEdit(comment, editedContent);
     } catch (error) {
-      console.log(error.message);
+      console.error("Error saving comment:", error);
     }
   };
   
