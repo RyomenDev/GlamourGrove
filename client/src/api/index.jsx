@@ -13,6 +13,7 @@ import {
   deleteProductByIdApi,
 } from "./Admin/ProductsApi";
 import { updateProfileApi, updateAvatarApi } from "./Admin/ProfileApi";
+import { signOutApi } from "./Admin/SidebarApi";
 
 export {
   addProduct,
@@ -30,4 +31,7 @@ export {
   //
   updateProfileApi,
   updateAvatarApi,
+  //
+  signOutApi,
+  //
 };
