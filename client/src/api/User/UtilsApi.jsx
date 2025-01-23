@@ -22,3 +22,22 @@ export const googleOAuthApi = async (userDetails) => {
     throw error;
   }
 };
+
+// Create a Stripe checkout session.
+export const createCheckoutSession = async (payload) => {
+  try {
+    const response = await axios.post(
+      `${baseUrl}/api/stripe/create-checkout-session`,
+      payload,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data; // Assumes the response contains the `url`
+  } catch (error) {
+    console.error("Error creating checkout session:", error);
+    throw error;
+  }
+};

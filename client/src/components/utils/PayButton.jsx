@@ -1,37 +1,29 @@
 import React from "react";
 import { useSelector } from "react-redux";
-
-const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
+import { createCheckoutSession } from "../../api/User";
 
 const PayButton = ({ cartItems }) => {
   const { _id } = useSelector((state) => state.user.currentUser);
-  //console.log(cartItems);
-  const handleCheckout = () => {
-    fetch(`${baseUrl}/api/stripe/create-checkout-session`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        cartItems,
-        userId: _id,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.url) {
-          console.log(data.url);
-          window.location.href = data.url;
-        } 
-      })
-      .catch((err) => console.log(err.message));
+
+  const handleCheckout = async () => {
+    try {
+      const payload = { cartItems, userId: _id };
+      const data = await createCheckoutSession(payload);
+
+      if (data.url) {
+        console.log(data.url);
+        window.location.href = data.url; // Redirect to the Stripe checkout page
+      }
+    } catch (err) {
+      console.error("Error during checkout:", err.message);
+    }
   };
 
   return (
     <div>
       <button
         className="bg-[#333] text-white w-full py-3 mt-6 font-semibold text-center rounded-md"
-        onClick={() => handleCheckout()}
+        onClick={handleCheckout}
       >
         Proceed to checkout
       </button>

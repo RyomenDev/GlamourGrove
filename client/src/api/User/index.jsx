@@ -12,7 +12,7 @@ import {
   fetchProducts,
   fetchAllProductsByPage,
 } from "./HomeApi";
-import { googleOAuthApi } from "./UtilsApi";
+import { googleOAuthApi, createCheckoutSession } from "./UtilsApi";
 
 export {
   addComment,
@@ -28,4 +28,5 @@ export {
   fetchAllProductsByPage,
   //
   googleOAuthApi,
+  createCheckoutSession,
 };
