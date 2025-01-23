@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import avatar from "../../assets/avatar.jpeg";
 import { useSelector } from "react-redux";
 
+const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
+
 const OrderCard = ({ orderDetail }) => {
   const [orderedProducts, setOrderedProducts] = useState([]);
   const [status, setStatus] = useState("Processing");
@@ -14,7 +16,7 @@ const OrderCard = ({ orderDetail }) => {
         const productDetails = [];
         for (const product of orderDetail.products) {
           const response = await fetch(
-            `https://e-commerce-app-pearl-six.vercel.app/api/product/getProduct/${product.productId}`
+            `${baseUrl}/api/product/getProduct/${product.productId}`
           ); // Assuming you have an endpoint to fetch product details by productId
           const data = await response.json();
           if (data) {

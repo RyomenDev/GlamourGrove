@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
+const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
+
 const DashAddProduct = () => {
   const { accessToken } = useSelector((state) => state.user);
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -44,20 +46,21 @@ const DashAddProduct = () => {
     data.append("productImage", formData.productImage);
 
     try {
-      const response = await fetch("https://e-commerce-app-pearl-six.vercel.app/api/product/addProduct", {
+      //   const response = await fetch("https://e-commerce-app-pearl-six.vercel.app/api/product/addProduct", {
+      const response = await fetch(`${baseUrl}/api/product/addProduct`, {
         method: "POST",
         headers: {
-          'Authorization': `Bearer ${accessToken}`
+          Authorization: `Bearer ${accessToken}`,
         },
         body: data,
       });
-  
+
       const responseData = await response.json();
-  
+
       if (response.ok) {
         setLoading(false);
         alert("Product added successfully!");
-        
+
         // Optionally, you can reset the form here
         setFormData({
           name: "",
@@ -160,7 +163,7 @@ const DashAddProduct = () => {
             value={formData.size}
           />
           <button type="submit" className="btn btn-neutral" disabled={loading}>
-          {loading ? "Loading..." : "Submit"}
+            {loading ? "Loading..." : "Submit"}
           </button>
         </form>
       </div>

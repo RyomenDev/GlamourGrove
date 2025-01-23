@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import MainLayout from "../components/utils/MainLayout";
 
+const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
+
 function SignUp() {
   const [formData, setFormData] = useState({});
   const [error, setError] = useState(false);
@@ -17,7 +19,7 @@ function SignUp() {
     try {
       setLoading(true);
       setError(false);
-      const res = await fetch("https://e-commerce-app-pearl-six.vercel.app/api/users/register", {
+      const res = await fetch(`${baseUrl}/api/users/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

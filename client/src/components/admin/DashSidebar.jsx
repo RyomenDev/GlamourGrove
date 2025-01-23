@@ -8,6 +8,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "../../redux/user/userSlice";
 
+const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
+
 const DashSidebar = () => {
   const location = useLocation();
   const [tab, setTab] = useState("");
@@ -25,7 +27,7 @@ const DashSidebar = () => {
 
   const handleSignOut =async () => {
     try {
-      const response = await fetch("https://e-commerce-app-pearl-six.vercel.app/api/users/logout", {
+      const response = await fetch(`${baseUrl}/api/users/logout`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${accessToken}`, // Include the access token in the request headers

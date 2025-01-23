@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import ImageCard from '../card/ImageCard'
 
+const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
+
 const UniqueCollection = () => {
 
   const [products, setProducts] = useState([]);
@@ -8,7 +10,7 @@ const UniqueCollection = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("https://e-commerce-app-pearl-six.vercel.app/api/product/getAllProducts?categoryName=Unique");
+        const response = await fetch(`${baseUrl}/api/product/getAllProducts?categoryName=Unique`);
         if (!response.ok) {
           throw new Error("Failed to fetch products");
         }

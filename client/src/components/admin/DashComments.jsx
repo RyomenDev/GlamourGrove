@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { useSelector } from "react-redux";
 
+const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
+
 const DashComments = () => {
   const { currentUser, accessToken } = useSelector((state) => state.user);
   const [comments, setComments] = useState([]);
@@ -19,7 +21,7 @@ const DashComments = () => {
   const fetchComments = async () => {
     try {
       const response = await fetch(
-        `https://e-commerce-app-pearl-six.vercel.app/api/comment/getAllComment?page=${currentPage}&perPage=${perPage}`,
+        `${baseUrl}/api/comment/getAllComment?page=${currentPage}&perPage=${perPage}`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -40,7 +42,7 @@ const DashComments = () => {
 
   const handleDeleteComment = async () => {
     try {
-      const response = await fetch(`https://e-commerce-app-pearl-six.vercel.app/api/comment/deleteComment/${commentId}`, {
+      const response = await fetch(`${baseUrl}/api/comment/deleteComment/${commentId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${accessToken}`,

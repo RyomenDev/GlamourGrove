@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { FaThumbsUp } from "react-icons/fa";
 import { Button, Textarea } from "flowbite-react";
 
+const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
 
 const Comment = ({ comment, onLike, onEdit, onDelete }) => {
   const [user, setUser] = useState({});
@@ -15,7 +16,7 @@ const Comment = ({ comment, onLike, onEdit, onDelete }) => {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await fetch(`https://e-commerce-app-pearl-six.vercel.app/api/users/getUserById/${comment.userId}`);
+        const res = await fetch(`${baseUrl}/api/users/getUserById/${comment.userId}`);
         const data = await res.json();
         if (res.ok) {
           setUser(data.data);
@@ -34,7 +35,7 @@ const Comment = ({ comment, onLike, onEdit, onDelete }) => {
   //console.log(comment);
   const handleSave = async () => {
     try {
-      const res = await fetch(`https://e-commerce-app-pearl-six.vercel.app/api/comment/editComment/${comment._id}`, {
+      const res = await fetch(`${baseUrl}/api/comment/editComment/${comment._id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

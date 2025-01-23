@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import PremiumCard from "../card/PremiumCard";
 import Skeleton from "../card/Skeleton";
 
+const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
+
 const PremiumCollection = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -12,7 +14,7 @@ const PremiumCollection = () => {
       setLoading(true); // Set loading to true before fetching products
       try {
         const response = await fetch(
-          `https://e-commerce-app-pearl-six.vercel.app/api/product/category/${selectedCategory}`
+          `${baseUrl}/api/product/category/${selectedCategory}`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch products");

@@ -4,6 +4,7 @@ import { GoogleAuthProvider, getAuth, signInWithPopup, } from "firebase/auth";
 import { app } from "../../firebase"
 import { signInSuccess } from "../../redux/user/userSlice";
 
+const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
 
 export default function OAuth() {
     const dispatch = useDispatch();
@@ -14,8 +15,8 @@ export default function OAuth() {
             const provider = new GoogleAuthProvider();
             const auth = getAuth(app);
 
-            const result = await signInWithPopup(auth, provider);;
-            const res = await fetch('https://e-commerce-app-pearl-six.vercel.app/api/users/google', {
+            const result = await signInWithPopup(auth, provider);
+            const res = await fetch(`${baseUrl}/api/users/google`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

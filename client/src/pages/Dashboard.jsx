@@ -12,6 +12,8 @@ import DashboardComp from "../components/admin/DashboardComp";
 import DashTransaction from "../components/admin/DashTransaction";
 import DashComments from "../components/admin/DashComments";
 
+const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
+
 const Dashboard = () => {
   const dispatch = useDispatch();
   const { currentUser, loading, error, accessToken } = useSelector(
@@ -22,7 +24,7 @@ const Dashboard = () => {
   const handleSignOut = async () => {
     try {
       const response = await fetch(
-        "https://e-commerce-app-pearl-six.vercel.app/api/users/logout",
+        `${baseUrl}/api/users/logout`,
         {
           method: "POST",
           headers: {

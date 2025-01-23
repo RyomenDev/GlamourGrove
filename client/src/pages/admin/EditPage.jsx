@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { json, useParams } from "react-router-dom";
 
+const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
+
 const EditPage = () => {
   const { productId } = useParams();
   const { accessToken } = useSelector((state) => state.user);
@@ -22,7 +24,7 @@ const EditPage = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await fetch(`https://e-commerce-app-pearl-six.vercel.app/api/product/getProduct/${productId}`);
+        const response = await fetch(`${baseUrl}/api/product/getProduct/${productId}`);
         if (!response.ok) {
           throw new Error("Failed to fetch product");
         }
@@ -106,7 +108,7 @@ const EditPage = () => {
     data.append("productImage", productImage);
 
     try {
-      const response = await fetch(`https://e-commerce-app-pearl-six.vercel.app/api/product/updateProduct/${productId}`, {
+      const response = await fetch(`${baseUrl}/api/product/updateProduct/${productId}`, {
         method: "PATCH",
         headers: {
           Authorization: accessToken ? `Bearer ${accessToken}` : "",

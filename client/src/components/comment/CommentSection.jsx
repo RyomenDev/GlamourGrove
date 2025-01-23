@@ -22,7 +22,7 @@ const CommentSection = ({ productId }) => {
     }
     try {
       const res = await fetch(
-        `https://e-commerce-app-pearl-six.vercel.app/api/comment/addComment/${productId}`,
+        `${baseUrl}/api/comment/addComment/${productId}`,
         {
           method: "POST",
           headers: {
@@ -49,7 +49,7 @@ const CommentSection = ({ productId }) => {
     const getComments = async () => {
       try {
         const res = await fetch(
-          `https://e-commerce-app-pearl-six.vercel.app/api/comment/getProductComment/${productId}`
+          `${baseUrl}/api/comment/getProductComment/${productId}`
         );
         if (res.ok) {
           const data = await res.json();
@@ -69,7 +69,7 @@ const CommentSection = ({ productId }) => {
         return;
       }
       const res = await fetch(
-        `https://e-commerce-app-pearl-six.vercel.app/api/comment/likeComment/${commentId}`,
+        `${baseUrl}/api/comment/likeComment/${commentId}`,
         {
           method: "PUT",
           headers: {
@@ -114,7 +114,7 @@ const CommentSection = ({ productId }) => {
         return;
       }
       const res = await fetch(
-        `https://e-commerce-app-pearl-six.vercel.app/api/comment/deleteComment/${commentId}`,
+        `${baseUrl}/api/comment/deleteComment/${commentId}`,
         {
           method: "DELETE",
           headers: {

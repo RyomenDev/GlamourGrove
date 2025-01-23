@@ -9,6 +9,8 @@ import {
 } from "../redux/user/userSlice";
 import OAuth from "../components/utils/OAuth";
 
+const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
+
 const Login = () => {
   const [formData, setFormData] = useState({});
   const { loading, error } = useSelector((state) => state.user);
@@ -23,8 +25,7 @@ const Login = () => {
     e.preventDefault();
     try {
       dispatch(signInStart());
-      //   const res = await fetch("https://e-commerce-app-pearl-six.vercel.app/api/users/login", {
-      const res = await fetch("http://localhost:5173/login", {
+        const res = await fetch(`${baseUrl}/api/users/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

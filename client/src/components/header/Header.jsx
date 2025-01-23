@@ -7,6 +7,8 @@ import { signOut } from "../../redux/user/userSlice";
 import { FaPlus, FaMinus, FaMoon, FaSun } from "react-icons/fa";
 import { toggleTheme } from "../../redux/theme/themeSlice";
 
+const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
+
 const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSideNavOpen, setIsSideNavOpen] = useState(false); // Step 1
@@ -63,7 +65,7 @@ const Header = () => {
 
   const handleSignOut = async () => {
     try {
-      const response = await fetch("https://e-commerce-app-pearl-six.vercel.app/api/users/logout", {
+      const response = await fetch(`${baseUrl}/api/users/logout`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${accessToken}`, // Include the access token in the request headers

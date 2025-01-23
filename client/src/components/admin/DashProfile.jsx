@@ -9,6 +9,8 @@ import {
 } from "../../redux/user/userSlice";
 import { useNavigate } from "react-router-dom";
 
+const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
+
 const DashProfile = () => {
   const { currentUser, error, loading, accessToken } = useSelector(
     (state) => state.user
@@ -28,7 +30,7 @@ const DashProfile = () => {
     e.preventDefault();
     try {
       dispatch(updateStart());
-      const res = await fetch("https://e-commerce-app-pearl-six.vercel.app/api/users/update-account", {
+      const res = await fetch(`${baseUrl}/api/users/update-account`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -59,7 +61,7 @@ const DashProfile = () => {
 
       dispatch(updateStart());
 
-      const response = await fetch("https://e-commerce-app-pearl-six.vercel.app/api/users/avatar", {
+      const response = await fetch(`${baseUrl}/api/users/avatar`, {
         method: "PATCH",
         headers: {
           Authorization: accessToken ? `Bearer ${accessToken}` : '',

@@ -6,6 +6,8 @@ import PriceCard from "../card/PriceCard";
 import Skeleton from "../card/Skeleton";
 import { Link } from "react-router-dom";
 
+const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
+
 const Bar = () => {
   const [selectedCategory, setSelectedCategory] = useState("Men");
   const [products, setProducts] = useState([]);
@@ -16,7 +18,7 @@ const Bar = () => {
     const fetchProductsByCategory = async () => {
       setLoading(true); // Set loading to true before fetching products
       try {
-        const response = await fetch(`https://e-commerce-app-pearl-six.vercel.app/api/product/getAllProducts?categoryType=${selectedCategory}`);
+        const response = await fetch(`${baseUrl}/api/product/getAllProducts?categoryType=${selectedCategory}`);
         if (!response.ok) {
           throw new Error('Failed to fetch products');
         }

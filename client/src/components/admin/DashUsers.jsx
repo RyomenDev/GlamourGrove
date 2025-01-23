@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import avatar from "../../assets/avatar.jpeg";
+const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
 
 const DashUsers = () => {
   const { currentUser, accessToken } = useSelector((state) => state.user);
@@ -23,7 +24,7 @@ const DashUsers = () => {
   const fetchUsers = async () => {
     try {
       const response = await fetch(
-        `https://e-commerce-app-pearl-six.vercel.app/api/users/getUsers?page=${currentPage}&perPage=${perPage}`,
+        `${baseUrl}/api/users/getUsers?page=${currentPage}&perPage=${perPage}`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,

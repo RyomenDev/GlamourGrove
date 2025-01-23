@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
+
 const Gallery = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [images, setImages] = useState([]);
@@ -17,9 +19,9 @@ const fetchProducts = async (category) => {
     try {
       let url;
       if (category === 'All') {
-        url = 'https://e-commerce-app-pearl-six.vercel.app/api/product/getAllProducts?categoryType=Men';
+        url = `${baseUrl}/api/product/getAllProducts?categoryType=Men`;
       } else {
-        url = `https://e-commerce-app-pearl-six.vercel.app/api/product/getAllProducts?categoryName=${category}`;
+        url = `${baseUrl}/api/product/getAllProducts?categoryName=${category}`;
       }
       const response = await fetch(url);
       if (!response.ok) {

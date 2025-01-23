@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import ProductCard from '../components/card/ProductCard';
 
+const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
+
 const AllProducts = () => {
   const [sidebarData, setSidebarData] = useState({
     searchTerm: '',
@@ -36,7 +38,8 @@ const AllProducts = () => {
     const fetchProducts = async () => {
       setLoading(true);
       const searchQuery = urlParams.toString();
-      const res = await fetch(`https://e-commerce-app-pearl-six.vercel.app/api/product/getProducts?${searchQuery}`);
+      const res = await fetch(`${baseUrl}/api/product/getProducts?${searchQuery}`);
+    //   const res = await fetch(`${baseUrl}/api/product/getProducts?${searchQuery}`);
       if (!res.ok) {
         setLoading(false);
         return;

@@ -1,19 +1,26 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import firebaseConf from "../conf/firebase-conf.jsx";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: "e-commerce-f3116.firebaseapp.com",
-  projectId: "e-commerce-f3116",
-  storageBucket: "e-commerce-f3116.appspot.com",
-  messagingSenderId: "816136071455",
-  appId: "1:816136071455:web:b1841b23c9733f7b9ee82a",
-  measurementId: "G-SPLKVHVGSW"
+  apiKey: firebaseConf.FIREBASE_APIKEY,
+  authDomain: firebaseConf.FIREBASE_AUTHDOMAIN,
+  projectId: firebaseConf.FIREBASE_PROJECTID,
+  storageBucket: firebaseConf.FIREBASE_STORAGEBUCKET,
+  messagingSenderId: firebaseConf.FIREBASE_MESSAGINGSENDERID,
+  appId: firebaseConf.FIREBASE_APPID,
+  measurementId: firebaseConf.FIREBASE_MEASUREMENTID,
 };
 
-// Initialize Firebase
-export const app = initializeApp(firebaseConfig);
+// Initialize Firebase app
+const app = initializeApp(firebaseConfig);
+
+// Export Firebase auth instance
+export const auth = getAuth(app);
+
+// Initialize and export Firestore
+export const db = getFirestore(app);
+
+// Export providers
+export const googleProvider = new GoogleAuthProvider();

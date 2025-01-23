@@ -10,6 +10,8 @@ import { Button, Progress, Table } from "flowbite-react";
 import { Link } from "react-router-dom";
 import avatar from "../../assets/avatar.jpeg";
 
+const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
+
 const DashboardComp = () => {
   const [users, setUsers] = useState([]);
   const [products, setProducts] = useState([]);
@@ -22,7 +24,7 @@ const DashboardComp = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await fetch("https://e-commerce-app-pearl-six.vercel.app/api/users/getUsers?perPage=5", {
+        const res = await fetch(`${baseUrl}/api/users/getUsers?perPage=5`, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
@@ -39,7 +41,7 @@ const DashboardComp = () => {
 
     const fetchProducts = async () => {
       try {
-        const res = await fetch("https://e-commerce-app-pearl-six.vercel.app/api/product/getAllProducts?perPage=5", {
+        const res = await fetch(`${baseUrl}/api/product/getAllProducts?perPage=5`, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
@@ -56,7 +58,7 @@ const DashboardComp = () => {
 
     const fetchCountProducts = async () => {
       try {
-        const res = await fetch("https://e-commerce-app-pearl-six.vercel.app/api/product/countProduct", {
+        const res = await fetch(`${baseUrl}/api/product/countProduct`, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
@@ -73,7 +75,7 @@ const DashboardComp = () => {
     const fetchComments = async () => {
       try {
         const response = await fetch(
-          `https://e-commerce-app-pearl-six.vercel.app/api/comment/getAllComment`,
+          `$${baseUrl}/api/comment/getAllComment`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,

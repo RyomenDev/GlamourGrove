@@ -7,6 +7,8 @@ import PremiumCard from "../components/card/PremiumCard";
 import CommentSection from "../components/comment/CommentSection";
 import { Spinner } from "flowbite-react";
 
+const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
+
 const Product = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
@@ -34,7 +36,7 @@ const Product = () => {
       try {
         setLoading(true);
         const productResponse = await fetch(
-          `https://e-commerce-app-pearl-six.vercel.app/api/product/getProduct/${productId}`
+          `${baseUrl}/api/product/getProduct/${productId}`
         );
         if (!productResponse.ok) {
           throw new Error("Failed to fetch product");
@@ -43,7 +45,7 @@ const Product = () => {
         setProduct(productData.data);
 
         const relatedResponse = await fetch(
-          `https://e-commerce-app-pearl-six.vercel.app/api/product/getAllProducts?categoryName=${productData.data.category.name}&perPage=6`
+          `${baseUrl}/api/product/getAllProducts?categoryName=${productData.data.category.name}&perPage=6`
         );
         if (!relatedResponse.ok) {
           throw new Error("Failed to fetch related products");
