@@ -1,14 +1,10 @@
+import { addProduct } from "./Admin/AddProducts";
 import {
-  addProduct,
-  //
   fetchUsers,
   fetchProducts,
   fetchCountProducts,
-  fetchComments,
-  //
-  fetchCommentsApi,
-  deleteCommentApi,
-} from "./adminApi";
+} from "./Admin/BoardComp";
+import { fetchCommentsApi, deleteCommentApi } from "./Admin/Comments.jsx";
 
 export {
   addProduct,
