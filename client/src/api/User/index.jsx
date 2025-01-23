@@ -6,7 +6,7 @@ import {
   deleteComment,
 } from "./CommentApi";
 import { logoutUser } from "./HeaderApi.jsx";
-import { getProductsByCategory } from "./HomeApi";
+import { getProductsByCategory, fetchProductsByCategory } from "./HomeApi";
 
 export {
   addComment,
@@ -17,4 +17,5 @@ export {
   deleteComment,
   //
   getProductsByCategory,
+  fetchProductsByCategory,
 };

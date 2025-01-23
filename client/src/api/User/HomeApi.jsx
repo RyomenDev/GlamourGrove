@@ -15,3 +15,16 @@ export const getProductsByCategory = async (category) => {
     throw error;
   }
 };
+
+// Fetch products by category
+export const fetchProductsByCategory = async (categoryType) => {
+  try {
+    const response = await axios.get(`${baseUrl}/api/product/getAllProducts`, {
+      params: { categoryType },
+    });
+    return response.data; // Assuming `data` contains the products
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    throw error;
+  }
+};
