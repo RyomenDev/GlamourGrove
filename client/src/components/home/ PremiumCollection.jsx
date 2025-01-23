@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PremiumCard from "../card/PremiumCard";
 import Skeleton from "../card/Skeleton";
 
-const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
+import { getProductsByCategory } from "../../api/User";
 
 const PremiumCollection = () => {
   const [products, setProducts] = useState([]);
@@ -13,24 +13,16 @@ const PremiumCollection = () => {
     const fetchProductsByCategory = async () => {
       setLoading(true); // Set loading to true before fetching products
       try {
-        const response = await fetch(
-          `${baseUrl}/api/product/category/${selectedCategory}`
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch products");
-        }
-        const data = await response.json();
-        setProducts(data.data);
-
-        setLoading(false);
-        // Set loading to false after 3 seconds
+        const data = await getProductsByCategory(selectedCategory); // Use the API function
+        setProducts(data.data); // Assuming `data.data` contains the product list
       } catch (error) {
         console.error("Error fetching products:", error);
-        setLoading(false);
+      } finally {
+        setLoading(false); // Ensure loading is set to false after the request
       }
     };
 
-    fetchProductsByCategory();
+    if (selectedCategory) fetchProducts();
   }, [selectedCategory]);
 
   return (

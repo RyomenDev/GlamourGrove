@@ -5,6 +5,16 @@ import {
   editComment,
   deleteComment,
 } from "./CommentApi";
- import {logoutUser} from "./HeaderApi.jsx";
+import { logoutUser } from "./HeaderApi.jsx";
+import { getProductsByCategory } from "./HomeApi";
 
-export { addComment, getComments, likeComment, editComment, deleteComment };
+export {
+  addComment,
+  getComments,
+  likeComment,
+  editComment,
+  //
+  deleteComment,
+  //
+  getProductsByCategory,
+};
