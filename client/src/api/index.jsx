@@ -1,3 +1,15 @@
-import {addProduct} from './adminApi';
+import {
+  addProduct,
+  fetchUsers,
+  fetchProducts,
+  fetchCountProducts,
+  fetchComments,
+} from "./adminApi";
 
-export {addProduct};
+export {
+  addProduct,
+  fetchUsers,
+  fetchProducts,
+  fetchCountProducts,
+  fetchComments,
+};

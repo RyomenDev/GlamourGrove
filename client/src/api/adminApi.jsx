@@ -37,3 +37,73 @@ export const addProduct = async (formData, accessToken) => {
     throw new Error(error.message);
   }
 };
+
+export const fetchUsers = async (accessToken, perPage = 5) => {
+  try {
+    const res = await fetch(
+      `${baseUrl}/api/users/getUsers?perPage=${perPage}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message);
+    return data;
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    throw error;
+  }
+};
+
+export const fetchProducts = async (accessToken, perPage = 5) => {
+  try {
+    const res = await fetch(
+      `${baseUrl}/api/product/getAllProducts?perPage=${perPage}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message);
+    return data;
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    throw error;
+  }
+};
+
+export const fetchCountProducts = async (accessToken) => {
+  try {
+    const res = await fetch(`${baseUrl}/api/product/countProduct`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message);
+    return data;
+  } catch (error) {
+    console.error("Error fetching product counts:", error);
+    throw error;
+  }
+};
+
+export const fetchComments = async (accessToken) => {
+  try {
+    const res = await fetch(`${baseUrl}/api/comment/getAllComment`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message);
+    return data;
+  } catch (error) {
+    console.error("Error fetching comments:", error);
+    throw error;
+  }
+};

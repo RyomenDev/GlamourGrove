@@ -9,8 +9,12 @@ import { FaShoppingBag } from "react-icons/fa";
 import { Button, Progress, Table } from "flowbite-react";
 import { Link } from "react-router-dom";
 import avatar from "../../assets/avatar.jpeg";
-
-const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
+import {
+  fetchUsersApi,
+  fetchProductsApi,
+  fetchProductCountsApi,
+  fetchCommentsApi,
+} from "../../api";
 
 const DashboardComp = () => {
   const [users, setUsers] = useState([]);
@@ -22,86 +26,29 @@ const DashboardComp = () => {
   const { currentUser, accessToken } = useSelector((state) => state.user);
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const res = await fetch(`${baseUrl}/api/users/getUsers?perPage=5`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-        const data = await res.json();
-        if (res.ok) {
-          setUsers(data.users);
-          setTotalUsers(data.totalUsers);
+    const fetchDashboardData = async () => {
+      if (currentUser.isAdmin) {
+        try {
+          const usersData = await fetchUsersApi(accessToken, 5);
+          setUsers(usersData.users);
+          setTotalUsers(usersData.totalUsers);
+
+          const productsData = await fetchProductsApi(accessToken, 5);
+          setProducts(productsData.products);
+          setTotalProducts(productsData.totalProducts);
+
+          const productCountsData = await fetchProductCountsApi(accessToken);
+          setCountProduct(productCountsData.counts);
+
+          const commentsData = await fetchCommentsApi(accessToken);
+          setCountComment(commentsData.totalComments);
+        } catch (error) {
+          console.error("Error fetching dashboard data:", error.message);
         }
-      } catch (error) {
-        console.log(error.message);
       }
     };
 
-    const fetchProducts = async () => {
-      try {
-        const res = await fetch(`${baseUrl}/api/product/getAllProducts?perPage=5`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-        const data = await res.json();
-        if (res.ok) {
-          setProducts(data.products);
-          setTotalProducts(data.totalProducts);
-        }
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
-
-    const fetchCountProducts = async () => {
-      try {
-        const res = await fetch(`${baseUrl}/api/product/countProduct`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-        const data = await res.json();
-        if (res.ok) {
-          setCountProduct(data.counts);
-        }
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
-
-    const fetchComments = async () => {
-      try {
-        const response = await fetch(
-          `$${baseUrl}/api/comment/getAllComment`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-  
-        if (!response.ok) {
-          throw new Error("Failed to fetch Comments");
-        }
-        const data = await response.json();
-        
-        if (response.ok) {
-          setCountComment(data.totalComments);
-        }
-      } catch (error) {
-        console.error("Errro fetching Comments", error);
-      }
-    };
-
-    if (currentUser.isAdmin) {
-      fetchUsers();
-      fetchProducts();
-      fetchCountProducts();
-      fetchComments();
-    }
+    fetchDashboardData();
   }, [currentUser, accessToken]);
 
   return (
