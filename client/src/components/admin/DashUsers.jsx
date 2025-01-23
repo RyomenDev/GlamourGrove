@@ -5,8 +5,8 @@ import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
+import { fetchUsersByPage, deleteUserByUserId } from "../../api";
 import avatar from "../../assets/avatar.jpeg";
-const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
 
 const DashUsers = () => {
   const { currentUser, accessToken } = useSelector((state) => state.user);
@@ -18,53 +18,33 @@ const DashUsers = () => {
   const perPage = 9;
 
   useEffect(() => {
-    fetchUsers();
-  }, [currentPage]);
-
-  const fetchUsers = async () => {
-    try {
-      const response = await fetch(
-        `${baseUrl}/api/users/getUsers?page=${currentPage}&perPage=${perPage}`,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch users");
+    const fetchUsers = async () => {
+      try {
+        const data = await fetchUsersByPage(accessToken, currentPage, perPage);
+        setUsers(data.users);
+        setTotalPages(Math.ceil(data.totalUsers / perPage));
+      } catch (error) {
+        console.error("Error fetching users:", error);
       }
-      const data = await response.json();
-      setUsers(data.users);
-      setTotalPages(Math.ceil(data.totalUsers / perPage));
-    } catch (error) {
-      console.error("Errro fetching users", error);
-    }
-  };
+    };
+
+    fetchUsers();
+  }, [currentPage, accessToken]);
 
   const handleDeleteUser = async () => {
     try {
-      const response = await fetch(`https://e-commerce-app-pearl-six.vercel.app/api/users/deleteUser/${userId}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      const data = await response.json();
-        if (response.ok) {
-            setUsers((prev) => prev.filter((user) => user._id !== userId));
-            setShowModal(false);
-        } else {
-            console.log(data.message);
-        }
-
+      const data = await deleteUserByUserId(accessToken, userId);
+      if (data.success) {
+        setUsers((prev) => prev.filter((user) => user._id !== userId));
+        setShowModal(false);
+      } else {
+        console.log(data.message);
+      }
     } catch (error) {
       console.error("Error deleting user:", error);
       alert("Failed to delete user: " + error.message);
     }
   };
-  
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -72,9 +52,9 @@ const DashUsers = () => {
 
   return (
     <div className="table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
-        <div>
-            <h1 className="text-center text-lg font-bold py-1">All users</h1>
-        </div>
+      <div>
+        <h1 className="text-center text-lg font-bold py-1">All users</h1>
+      </div>
       {currentUser.isAdmin && users.length > 0 ? (
         <>
           <Table hoverable className="shadow-md">
