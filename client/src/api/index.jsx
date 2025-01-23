@@ -15,7 +15,8 @@ import {
 import { updateProfileApi, updateAvatarApi } from "./Admin/ProfileApi";
 import { signOutApi } from "./Admin/SidebarApi";
 import { fetchOrders } from "./Admin/TransactionApi";
-import {fetchUsersByPage,deleteUserByUserId} from "./Admin/UsersApi";
+import { fetchUsersByPage, deleteUserByUserId } from "./Admin/UsersApi";
+import { fetchProductDetails, updateOrderStatus } from "./Admin/OrderCardApi";
 
 export {
   addProduct,
@@ -39,5 +40,6 @@ export {
   fetchUsersByPage,
   deleteUserByUserId,
   //
-  
+  fetchProductDetails,
+  updateOrderStatus,
 };

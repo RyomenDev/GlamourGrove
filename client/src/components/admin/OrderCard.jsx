@@ -1,9 +1,9 @@
 import { Button, Card } from "flowbite-react";
 import React, { useEffect, useState } from "react";
-import avatar from "../../assets/avatar.jpeg";
 import { useSelector } from "react-redux";
+import { fetchProductDetails, updateOrderStatus } from "../../api/OrderCardApi";
 
-const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
+import avatar from "../../assets/avatar.jpeg";
 
 const OrderCard = ({ orderDetail }) => {
   const [orderedProducts, setOrderedProducts] = useState([]);
@@ -15,10 +15,7 @@ const OrderCard = ({ orderDetail }) => {
       try {
         const productDetails = [];
         for (const product of orderDetail.products) {
-          const response = await fetch(
-            `${baseUrl}/api/product/getProduct/${product.productId}`
-          ); // Assuming you have an endpoint to fetch product details by productId
-          const data = await response.json();
+          const data = await fetchProductDetails(product.productId); // Use OrderCardApi to fetch product details
           if (data) {
             productDetails.push({
               product: data.data, // Product details fetched from backend
@@ -35,24 +32,10 @@ const OrderCard = ({ orderDetail }) => {
     fetchProductDetails();
   }, [orderDetail]);
 
-  //console.log(orderDetail);
-
   const handleProcessStatus = async () => {
     try {
-      // Send a PATCH request to update the order status
-      const response = await fetch(
-        `https://e-commerce-app-pearl-six.vercel.app/api/order/updateDelivery/${orderDetail._id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`, // Include access token in the request headers
-          },
-        }
-      );
-
-      if (response.ok) {
-        // If the request is successful, update the local status state
+      const data = await updateOrderStatus(orderDetail._id, accessToken); // Use OrderCardApi to update the order status
+      if (data.success) {
         setStatus("Shipped");
       } else {
         throw new Error("Failed to update status");
@@ -111,7 +94,7 @@ const OrderCard = ({ orderDetail }) => {
           <div>
             <h3 className="font-semibold">Status Info</h3>
             <span>
-            Status: <span className="text-red-600">{status}</span>
+              Status: <span className="text-red-600">{status}</span>
             </span>
           </div>
           <div className="flex justify-center items-center">
@@ -119,7 +102,7 @@ const OrderCard = ({ orderDetail }) => {
               className="px-4 py-1 lg:px-8 lg:py-2 text-black dark:text-white dark:bg-blue-500 bg-blue-500"
               onClick={handleProcessStatus}
             >
-              Proess Status
+              Process Status
             </Button>
           </div>
         </Card>
