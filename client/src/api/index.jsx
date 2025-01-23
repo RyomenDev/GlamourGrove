@@ -14,6 +14,7 @@ import {
 } from "./Admin/ProductsApi";
 import { updateProfileApi, updateAvatarApi } from "./Admin/ProfileApi";
 import { signOutApi } from "./Admin/SidebarApi";
+import { fetchOrders } from "./Admin/TransactionApi";
 
 export {
   addProduct,
