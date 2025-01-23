@@ -7,7 +7,7 @@ import { signOut } from "../../redux/user/userSlice";
 import { FaPlus, FaMinus, FaMoon, FaSun } from "react-icons/fa";
 import { toggleTheme } from "../../redux/theme/themeSlice";
 
-const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
+import { logoutUser } from "../../api/User";
 
 const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -64,22 +64,14 @@ const Header = () => {
   const { theme } = useSelector((state) => state.theme);
 
   const handleSignOut = async () => {
-    try {
-      const response = await fetch(`${baseUrl}/api/users/logout`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${accessToken}`, // Include the access token in the request headers
-        }, // Adjust the method as needed
-        // Add any required headers or options
-      });
+    const dispatch = useDispatch();
+    const { accessToken } = useSelector((state) => state.user); // Access token from Redux state
 
-      if (response.ok) {
-        dispatch(signOut());
-      } else {
-        throw new Error("Failed to sign out");
-      }
+    try {
+      await logoutUser(accessToken); // Call the API function for logout
+      dispatch(signOut()); // Dispatch the sign-out action to update state
     } catch (error) {
-      console.log(error);
+      console.error("Failed to sign out:", error);
       // Optionally display an error message to the user
     }
   };
@@ -89,7 +81,7 @@ const Header = () => {
       {/* Left section */}
       <div className="flex items-center">
         <Link to="/" className="text-lg font-semibold dark:text-gray-50">
-           FashionFleet
+          FashionFleet
         </Link>
       </div>
 
@@ -170,7 +162,7 @@ const Header = () => {
         )}
         <Link to="/shoppingList" className="mr-2">
           <div className="relative">
-            <FaShoppingCart className="mr-4 cursor-pointer"/>
+            <FaShoppingCart className="mr-4 cursor-pointer" />
             {cartItems.length > 0 && (
               <div className="absolute top-0 right-0 w-4 h-4 bg-red-500 text-white flex items-center justify-center rounded-full text-xs">
                 {cartItems.length}
@@ -190,7 +182,9 @@ const Header = () => {
                 />
               </div>
               {/* Your sidenav content here */}
-              <h1 className="text-black dark:text-gray-50 ml-3 text-lg">Categories</h1>
+              <h1 className="text-black dark:text-gray-50 ml-3 text-lg">
+                Categories
+              </h1>
               <ul className="px-4 text-black dark:text-gray-50">
                 <li className="relative py-2 border-b">
                   <span
