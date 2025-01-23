@@ -10,6 +10,7 @@ import {
   getProductsByCategory,
   fetchProductsByCategory,
   fetchProducts,
+  fetchAllProductsByPage,
 } from "./HomeApi";
 
 export {
@@ -23,4 +24,5 @@ export {
   getProductsByCategory,
   fetchProductsByCategory,
   fetchProducts,
+  fetchAllProductsByPage,
 };

@@ -46,3 +46,16 @@ export const fetchProducts = async (category) => {
     throw error;
   }
 };
+
+// Fetch all products with optional pagination.
+export const fetchAllProductsByPage = async (page = 1) => {
+  try {
+    const response = await axios.get(`${baseUrl}/api/product/getAllProducts`, {
+      params: { page }, // Pass the page number as a query parameter
+    });
+    return response.data.products; // Assuming products are returned in the 'products' field
+  } catch (error) {
+    console.error("Error fetching all products:", error);
+    throw error;
+  }
+};
