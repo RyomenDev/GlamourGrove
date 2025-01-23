@@ -12,6 +12,7 @@ import {
   fetchProductsPageApi,
   deleteProductByIdApi,
 } from "./Admin/ProductsApi";
+import { updateProfileApi, updateAvatarApi } from "./Admin/ProfileApi";
 
 export {
   addProduct,
@@ -26,4 +27,7 @@ export {
   //
   fetchProductsPageApi,
   deleteProductByIdApi,
+  //
+  updateProfileApi,
+  updateAvatarApi,
 };
