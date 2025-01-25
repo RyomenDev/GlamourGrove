@@ -49,3 +49,21 @@ export const loginUser = async (formData) => {
     throw new Error(error.response?.data?.message || "Login failed");
   }
 };
+
+// API call to fetch products by category
+export const fetchProductsByCategory = async (categoryName, currentPage) => {
+  try {
+    const response = await axios.get(
+      `${baseUrl}/api/product/getAllProducts`,
+      {
+        params: {
+          categoryName,
+          page: currentPage,
+        },
+      }
+    );
+    return response.data; // Return the fetched data
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Failed to fetch products");
+  }
+};
