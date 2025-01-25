@@ -2,7 +2,7 @@ import { Button, Select, TextInput } from "flowbite-react";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ProductCard from "../components/card/ProductCard";
-import { fetchProducts } from "../../api/Pages/PagesApi";
+import { fetchProducts } from "../api/Pages/PagesApi";
 
 const AllProducts = () => {
   const [sidebarData, setSidebarData] = useState({

@@ -9,6 +9,7 @@ import { Spinner } from "flowbite-react";
 
 import { fetchProductById, fetchRelatedProducts } from "../api/Pages/PagesApi";
 
+
 const Product = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);

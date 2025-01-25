@@ -12,7 +12,8 @@ import DashboardComp from "../components/admin/DashboardComp";
 import DashTransaction from "../components/admin/DashTransaction";
 import DashComments from "../components/admin/DashComments";
 
-import { logoutUser } from "../../api/Pages/PagesApi";
+import { logoutUser } from "../api/Pages/PagesApi";
+
 
 const Dashboard = () => {
   const dispatch = useDispatch();

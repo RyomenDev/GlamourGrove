@@ -4,6 +4,7 @@ import MainLayout from "../components/utils/MainLayout";
 
 import { registerUser } from "../api/Pages/PagesApi";
 
+
 function SignUp() {
   const [formData, setFormData] = useState({});
   const [error, setError] = useState(false);

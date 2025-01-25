@@ -3,7 +3,8 @@ import { useParams } from "react-router-dom";
 import Skeleton from "../components/card/Skeleton";
 import PremiumCard from "../components/card/PremiumCard";
 
-import { fetchProductsByCategory } from "../../api/Pages/PagesApi";
+import { fetchProductsByCategory } from "../api/Pages/PagesApi";
+
 
 const MenProductPage = () => {
   const { productName } = useParams();
