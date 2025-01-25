@@ -15,23 +15,23 @@ const WomenProductPage = () => {
   const [totalProducts, setTotalProducts] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
-   useEffect(() => {
-     const getProducts = async () => {
-       setLoading(true);
-       try {
-         const data = await fetchProductsByCategory(categoryName, currentPage);
-         setProducts(data.products);
-         setTotalProducts(data.totalProducts);
-         setLoading(false);
-       } catch (error) {
-         console.error("Error fetching products:", error);
-         setError(error.message);
-         setLoading(false);
-       }
-     };
+  useEffect(() => {
+    const getProducts = async () => {
+      setLoading(true);
+      try {
+        const data = await fetchProductsByCategory(categoryName, currentPage);
+        setProducts(data.products);
+        setTotalProducts(data.totalProducts);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        setError(error.message);
+        setLoading(false);
+      }
+    };
 
-     getProducts();
-   }, [categoryName, currentPage]);
+    getProducts();
+  }, [categoryName, currentPage]);
 
   const totalPages = Math.ceil(totalProducts / 9);
 
