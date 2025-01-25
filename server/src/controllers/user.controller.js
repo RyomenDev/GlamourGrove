@@ -124,6 +124,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
 const google = asyncHandler(async (req, res) => {
   const { email, username, fullName } = req.body;
+  //   console.log("email: ", email);
 
   if (!email) {
     throw new ApiError(400, "username or email is required");
@@ -361,12 +362,12 @@ const getUsers = asyncHandler(async (req, res) => {
   }
 });
 
-const deleteUser = asyncHandler(async(req, res) => {
-  const {userId} = req.params;
+const deleteUser = asyncHandler(async (req, res) => {
+  const { userId } = req.params;
 
-  const admin = await User.findById({ _id:req.user._id });
+  const admin = await User.findById({ _id: req.user._id });
   if (!admin.isAdmin) {
-    throw new ApiError(401, "Unauthorized access")
+    throw new ApiError(401, "Unauthorized access");
   }
 
   const user = await User.findById({ _id: userId });
@@ -381,12 +382,10 @@ const deleteUser = asyncHandler(async(req, res) => {
     throw new ApiError(401, "User not deleted");
   }
 
-  return res
-    .status(201)
-    .json(new ApiResponse(200, {}, "User deleted"));
-})
+  return res.status(201).json(new ApiResponse(200, {}, "User deleted"));
+});
 
-const changeProfiePicture = asyncHandler(async(req, res) => {
+const changeProfiePicture = asyncHandler(async (req, res) => {
   const avatarLocalPath = req.file?.path;
 
   if (!avatarLocalPath) {
@@ -411,26 +410,25 @@ const changeProfiePicture = asyncHandler(async(req, res) => {
 
   return res
     .status(201)
-    .json(new ApiResponse(200, user, "Avatar image updated successfully"));  
-})
+    .json(new ApiResponse(200, user, "Avatar image updated successfully"));
+});
 
-const getUserById = asyncHandler(async(req, res) => {
-   const { userId } = req.params;
-   const user = await User.findById({ _id:userId });
+const getUserById = asyncHandler(async (req, res) => {
+  const { userId } = req.params;
+  const user = await User.findById({ _id: userId });
 
-   if (!user) {
-      throw new ApiError(401, "User not found")
-   }
+  if (!user) {
+    throw new ApiError(401, "User not found");
+  }
 
-   const userDetails = await User.findById(user._id).select(
+  const userDetails = await User.findById(user._id).select(
     "-password -refreshToken"
-   );
+  );
 
-   return res
-      .status(201)
-      .json(new ApiResponse(200, userDetails, "User retrive successfully"))
-
-})
+  return res
+    .status(201)
+    .json(new ApiResponse(200, userDetails, "User retrive successfully"));
+});
 
 export {
   registerUser,
@@ -443,5 +441,5 @@ export {
   changeProfiePicture,
   getUsers,
   deleteUser,
-  getUserById
+  getUserById,
 };

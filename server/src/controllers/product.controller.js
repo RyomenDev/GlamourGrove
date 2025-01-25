@@ -25,7 +25,6 @@ const addProduct = asyncHandler(async (req, res) => {
     throw new ApiError(401, "productImage file is required");
   }
 
-
   // Create the product object
   const newProduct = await Product.create({
     name,
@@ -69,7 +68,10 @@ const getProductsByCategoryType = asyncHandler(async (req, res) => {
 });
 
 const getProductById = asyncHandler(async (req, res) => {
+  //   console.log("hi there", req.params);
+
   const { productId } = req.params;
+  //   console.log("productId", productId);
 
   const product = await Product.findById({ _id: productId });
 
@@ -145,12 +147,12 @@ const searchProducts = asyncHandler(async (req, res) => {
     const query = {};
     if (searchTerm) {
       query.$or = [
-        { name: { $regex: searchTerm, $options: 'i' } },
-        { 'category.name': { $regex: searchTerm, $options: 'i' } }
+        { name: { $regex: searchTerm, $options: "i" } },
+        { "category.name": { $regex: searchTerm, $options: "i" } },
       ];
     }
     if (category) {
-      query['category.name'] = category;
+      query["category.name"] = category;
     }
 
     let products;
@@ -162,11 +164,10 @@ const searchProducts = asyncHandler(async (req, res) => {
       products = await Product.find(query);
     }
 
-
     if (sort) {
-      if (sort === 'asc') {
+      if (sort === "asc") {
         products = products.sort((a, b) => a.createdAt - b.createdAt);
-      } else if (sort === 'desc') {
+      } else if (sort === "desc") {
         products = products.sort((a, b) => b.createdAt - a.createdAt);
       }
     }
@@ -175,7 +176,7 @@ const searchProducts = asyncHandler(async (req, res) => {
     res.status(201).json({
       success: true,
       products: products,
-      totalProducts
+      totalProducts,
     });
   } catch (error) {
     // Handle errors
@@ -183,7 +184,6 @@ const searchProducts = asyncHandler(async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
-
 
 const updateProduct = asyncHandler(async (req, res) => {
   const userId = req.user._id;
@@ -297,47 +297,49 @@ const deleteProduct = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, {}, "Product deleted successfully"));
 });
 
-
-const countProducts = asyncHandler(async(req, res) => {
-  const user = await User.findById({ _id:req.user._id });
+const countProducts = asyncHandler(async (req, res) => {
+  const user = await User.findById({ _id: req.user._id });
   if (!user) {
     throw new ApiError(401, "user not found");
   }
 
   if (!user.isAdmin) {
-    throw new ApiError(401, "Unauthorized request")
+    throw new ApiError(401, "Unauthorized request");
   }
 
   try {
-    const menProducts = await Product.find({ 'category.type': 'Men' });
-    const womenProducts = await Product.find({ 'category.type': 'Women' });
-    const kidsProducts = await Product.find({ 'category.type': 'Kids' });
+    const menProducts = await Product.find({ "category.type": "Men" });
+    const womenProducts = await Product.find({ "category.type": "Women" });
+    const kidsProducts = await Product.find({ "category.type": "Kids" });
 
-    const totalProducts = menProducts.length + womenProducts.length + kidsProducts.length;
+    const totalProducts =
+      menProducts.length + womenProducts.length + kidsProducts.length;
 
     const menProductsCount = menProducts.length;
     const womenProductsCount = womenProducts.length;
     const kidsProductsCount = kidsProducts.length;
 
     const menPercentage = Math.round((menProductsCount / totalProducts) * 100);
-    const womenPercentage = Math.round((womenProductsCount / totalProducts) * 100);
-    const kidsPercentage = Math.round((kidsProductsCount / totalProducts) * 100);
-
+    const womenPercentage = Math.round(
+      (womenProductsCount / totalProducts) * 100
+    );
+    const kidsPercentage = Math.round(
+      (kidsProductsCount / totalProducts) * 100
+    );
 
     res.status(200).json({
       success: true,
       counts: {
         men: menPercentage,
         women: womenPercentage,
-        kids: kidsPercentage
-      }
+        kids: kidsPercentage,
+      },
     });
   } catch (error) {
     console.error("Error counting products:", error);
     throw new ApiError(500, "Internal server error");
   }
-
-})
+});
 
 export {
   addProduct,
@@ -347,5 +349,5 @@ export {
   getProductById,
   updateProduct,
   deleteProduct,
-  countProducts
+  countProducts,
 };
