@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import MainLayout from "../components/utils/MainLayout";
 
-const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
+import { registerUser } from "../api/Pages/PagesApi";
 
 function SignUp() {
   const [formData, setFormData] = useState({});
@@ -19,29 +19,25 @@ function SignUp() {
     try {
       setLoading(true);
       setError(false);
-      const res = await fetch(`${baseUrl}/api/users/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      const data = await res.json();
+
+      const data = await registerUser(formData); // Call the API function
       console.log(data);
+
       setLoading(false);
       if (data.success === false) {
         setError(true);
         return;
       }
+
       navigate("/login");
     } catch (error) {
+      console.error(error.message);
       setLoading(false);
       setError(true);
     }
   };
 
   return (
-   
     <div className="font-sans text-gray-800 dark:text-gray-100 bg-white flex items-center mx-aut  px-4 py-32 dark:bg-gray-900 justify-center">
       <div className="max-w-4xl grid md:grid-cols-3 items-center shadow-md rounded-xl overflow-hidden">
         <div className="max-md:order-1 flex flex-col justify-center space-y-16 max-md:mt-16 min-h-full bg-gradient-to-r from-gray-900 to-gray-700 lg:px-8 px-4 py-4">
@@ -223,7 +219,6 @@ function SignUp() {
         </form>
       </div>
     </div>
-    
   );
 }
 
