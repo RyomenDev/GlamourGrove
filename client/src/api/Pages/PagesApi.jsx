@@ -67,3 +67,14 @@ export const fetchProductsByCategory = async (categoryName, currentPage) => {
     throw new Error(error.response?.data?.message || "Failed to fetch products");
   }
 };
+
+// Fetch product details by ID
+export const fetchProductById = async (productId) => {
+  try {
+    const response = await axios.get(`${baseUrl}/api/product/getProduct/${productId}`);
+    return response.data; // Assuming the data contains the product details
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Failed to fetch product");
+  }
+};
+
