@@ -1,5 +1,10 @@
 import { addProduct } from "./AddProductsApi";
-import { fetchUsers, fetchProducts, fetchCountProducts } from "./BoardCompApi";
+import {
+  fetchUsers,
+  fetchProducts,
+  fetchCountProducts,
+  fetchComments,
+} from "./BoardCompApi";
 import { fetchCommentsPageApi, deleteCommentByIdApi } from "./CommentsApi";
 import { fetchProductsPageApi, deleteProductByIdApi } from "./ProductsApi";
 import { updateProfileApi, updateAvatarApi } from "./ProfileApi";

@@ -19,8 +19,9 @@ export {
   getComments,
   likeComment,
   editComment,
-  //
   deleteComment,
+  //
+  logoutUser,
   //
   getProductsByCategory,
   fetchProductsByCategory,
