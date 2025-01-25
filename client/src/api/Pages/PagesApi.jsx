@@ -89,3 +89,19 @@ export const fetchRelatedProducts = async (categoryName, perPage = 6) => {
     throw new Error(error.response?.data?.message || "Failed to fetch related products");
   }
 };
+
+// User Registration API
+export const registerUser = async (formData) => {
+  try {
+    const response = await axios.post(`${baseUrl}/api/users/register`, formData, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data; // Return API response
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message || "Failed to register user"
+    );
+  }
+};
