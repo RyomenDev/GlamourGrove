@@ -35,23 +35,16 @@ const Product = () => {
     const fetchProductAndRelated = async () => {
       try {
         setLoading(true);
-        const productResponse = await fetch(
-          `${baseUrl}/api/product/getProduct/${productId}`
-        );
-        if (!productResponse.ok) {
-          throw new Error("Failed to fetch product");
-        }
-        const productData = await productResponse.json();
+
+        // Fetch product details
+        const productData = await fetchProductById(productId);
         setProduct(productData.data);
 
-        const relatedResponse = await fetch(
-          `${baseUrl}/api/product/getAllProducts?categoryName=${productData.data.category.name}&perPage=6`
+        // Fetch related products
+        const relatedData = await fetchRelatedProducts(
+          productData.data.category.name
         );
-        if (!relatedResponse.ok) {
-          throw new Error("Failed to fetch related products");
-        }
-        const relatedData = await relatedResponse.json();
-        setRelatedProduct(relatedData.products);
+        setRelatedProducts(relatedData.products);
 
         setLoading(false);
       } catch (error) {
