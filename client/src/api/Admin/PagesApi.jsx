@@ -1,6 +1,7 @@
 import axios from "axios";
+import conf from "../../conf/conf";
 
-const baseUrl = import.meta.env.VITE_BASE_URL; // Base URL for API requests
+const baseUrl = conf.SERVER_API_URL;
 
 // Fetch product details by ID.
 export const fetchProductDetails = async (productId) => {
