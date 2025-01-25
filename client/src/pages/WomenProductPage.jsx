@@ -4,7 +4,7 @@ import MainLayout from "../components/utils/MainLayout";
 import Skeleton from "../components/card/Skeleton";
 import PremiumCard from "../components/card/PremiumCard";
 
-const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
+import { fetchProductsByCategory } from "../api/Pages/PagesApi";
 
 const WomenProductPage = () => {
   const { productName } = useParams();
@@ -15,29 +15,23 @@ const WomenProductPage = () => {
   const [totalProducts, setTotalProducts] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
-  useEffect(() => {
-    const fetchProductsByCategory = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch(
-          `${baseUrl}/api/product/getAllProducts?categoryName=${categoryName}&page=${currentPage}`
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch products");
-        }
-        const data = await response.json();
-        setProducts(data.products);
-        // console.log(data.products);
-        setLoading(false);
-        setTotalProducts(data.totalProducts);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-        setLoading(false);
-      }
-    };
+   useEffect(() => {
+     const getProducts = async () => {
+       setLoading(true);
+       try {
+         const data = await fetchProductsByCategory(categoryName, currentPage);
+         setProducts(data.products);
+         setTotalProducts(data.totalProducts);
+         setLoading(false);
+       } catch (error) {
+         console.error("Error fetching products:", error);
+         setError(error.message);
+         setLoading(false);
+       }
+     };
 
-    fetchProductsByCategory();
-  }, [categoryName, currentPage]);
+     getProducts();
+   }, [categoryName, currentPage]);
 
   const totalPages = Math.ceil(totalProducts / 9);
 
