@@ -36,3 +36,16 @@ export const logoutUser = async (accessToken) => {
   }
 };
 
+// API call for logging in
+export const loginUser = async (formData) => {
+  try {
+    const response = await axios.post(`${baseUrl}/api/users/login`, formData, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data; // Returns the response object
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Login failed");
+  }
+};
