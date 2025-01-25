@@ -1,5 +1,5 @@
 import axios from "axios";
-import conf from "../conf/conf";
+import conf from "../../conf/conf";
 
 const baseUrl = conf.SERVER_API_URL;
 
