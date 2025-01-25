@@ -9,7 +9,7 @@ import {
 } from "../redux/user/userSlice";
 import OAuth from "../components/utils/OAuth";
 
-const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
+import { loginUser } from "../api/Pages/PagesApi";
 
 const Login = () => {
   const [formData, setFormData] = useState({});
@@ -21,31 +21,25 @@ const Login = () => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      dispatch(signInStart());
-        const res = await fetch(`${baseUrl}/api/users/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      const data = await res.json();
-      if (data.success === false) {
-        dispatch(signInFailure(data));
-        return;
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+        dispatch(signInStart());
+        const data = await loginUser(formData); // Call the API function
+
+        if (data.success === false) {
+          dispatch(signInFailure(data));
+          return;
+        }
+
+        const { user, accessToken } = data.data; // Ensure correct data structure
+        dispatch(signInSuccess({ user, accessToken }));
+        navigate("/");
+      } catch (error) {
+        dispatch(signInFailure(error));
+        console.error("Login error:", error.message);
       }
-
-      const { user, accessToken } = data.data; // Check if accessToken is present in the correct structure
-      dispatch(signInSuccess({ user, accessToken }));
-
-      navigate("/");
-    } catch (error) {
-      dispatch(signInFailure(error));
-    }
-  };
+    };
 
   return (
     <div className="py-32 lg:py-44 dark:bg-gray-900">
