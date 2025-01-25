@@ -7,7 +7,7 @@ import PremiumCard from "../components/card/PremiumCard";
 import CommentSection from "../components/comment/CommentSection";
 import { Spinner } from "flowbite-react";
 
-const baseUrl = import.meta.env.VITE_BASE_URL; // `${baseUrl}`
+import { fetchProductById, fetchRelatedProducts } from "../api/Pages/PagesApi";
 
 const Product = () => {
   const { productId } = useParams();
