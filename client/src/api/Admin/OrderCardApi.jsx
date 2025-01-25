@@ -4,7 +4,7 @@ import conf from "../conf/conf";
 const baseUrl = conf.SERVER_API_URL;
 
 // Fetch product details based on productId
-const fetchProductDetails = async (productId) => {
+export const fetchProductDetails = async (productId) => {
   try {
     const response = await axios.get(
       `${baseUrl}/api/product/getProduct/${productId}`
@@ -17,7 +17,7 @@ const fetchProductDetails = async (productId) => {
 };
 
 // Update order delivery status
-const updateOrderStatus = async (orderId, accessToken) => {
+export const updateOrderStatus = async (orderId, accessToken) => {
   try {
     const response = await axios.patch(
       `${baseUrl}/api/order/updateDelivery/${orderId}`,
@@ -36,7 +36,7 @@ const updateOrderStatus = async (orderId, accessToken) => {
   }
 };
 
-export default {
-  fetchProductDetails,
-  updateOrderStatus,
-};
+// export default {
+//   fetchProductDetails,
+//   updateOrderStatus,
+// };

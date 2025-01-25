@@ -4,6 +4,7 @@ import {
   likeComment,
   editComment,
   deleteComment,
+  getUserById,
 } from "./CommentApi";
 import { logoutUser } from "./HeaderApi.jsx";
 import {
@@ -20,6 +21,7 @@ export {
   likeComment,
   editComment,
   deleteComment,
+  getUserById,
   //
   logoutUser,
   //

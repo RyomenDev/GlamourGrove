@@ -3,7 +3,7 @@ import conf from "../conf/conf";
 
 const baseUrl = conf.SERVER_API_URL;
 
-const fetchOrders = async (accessToken) => {
+export const fetchOrders = async (accessToken) => {
   try {
     const response = await axios.get(`${baseUrl}/api/order/getAllOrders`, {
       headers: {
@@ -17,6 +17,3 @@ const fetchOrders = async (accessToken) => {
   }
 };
 
-export default {
-  fetchOrders,
-};

@@ -1,9 +1,9 @@
 import { addProduct } from "./AddProductsApi";
 import {
-  fetchUsers,
-  fetchProducts,
-  fetchCountProducts,
-  fetchComments,
+  fetchUsersApi,
+  fetchProductsApi,
+  fetchProductCountsApi,
+  fetchCommentsApi,
 } from "./BoardCompApi";
 import { fetchCommentsPageApi, deleteCommentByIdApi } from "./CommentsApi";
 import { fetchProductsPageApi, deleteProductByIdApi } from "./ProductsApi";
@@ -17,10 +17,10 @@ import { updateProductDetails } from "./PagesApi"; //fetchProductDetails,
 export {
   addProduct,
   //
-  fetchUsers,
-  fetchProducts,
-  fetchCountProducts,
-  fetchComments,
+  fetchUsersApi,
+  fetchProductsApi,
+  fetchProductCountsApi,
+  fetchCommentsApi,
   //
   fetchCommentsPageApi,
   deleteCommentByIdApi,
@@ -32,6 +32,8 @@ export {
   updateAvatarApi,
   //
   signOutApi,
+  //
+  fetchOrders,
   //
   fetchUsersByPage,
   deleteUserByUserId,

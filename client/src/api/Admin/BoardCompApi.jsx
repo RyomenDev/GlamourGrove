@@ -3,7 +3,7 @@ import conf from "../conf/conf";
 
 const baseUrl = conf.SERVER_API_URL;
 
-export const fetchUsers = async (accessToken, perPage = 5) => {
+export const fetchUsersApi = async (accessToken, perPage = 5) => {
   try {
     const response = await axios.get(`${baseUrl}/api/users/getUsers`, {
       headers: {
@@ -21,7 +21,7 @@ export const fetchUsers = async (accessToken, perPage = 5) => {
   }
 };
 
-export const fetchProducts = async (accessToken, perPage = 5) => {
+export const fetchProductsApi = async (accessToken, perPage = 5) => {
   try {
     const response = await axios.get(`${baseUrl}/api/product/getAllProducts`, {
       headers: {
@@ -41,7 +41,7 @@ export const fetchProducts = async (accessToken, perPage = 5) => {
   }
 };
 
-export const fetchCountProducts = async (accessToken) => {
+export const fetchProductCountsApi = async (accessToken) => {
   try {
     const response = await axios.get(`${baseUrl}/api/product/countProduct`, {
       headers: {
@@ -58,7 +58,7 @@ export const fetchCountProducts = async (accessToken) => {
   }
 };
 
-export const fetchComments = async (accessToken) => {
+export const fetchCommentsApi = async (accessToken) => {
   try {
     const response = await axios.get(`${baseUrl}/api/comment/getAllComment`, {
       headers: {
