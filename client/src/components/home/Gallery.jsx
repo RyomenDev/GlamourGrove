@@ -12,7 +12,7 @@ const Gallery = () => {
     const getProducts = async () => {
       setLoading(true); // Start loading
       try {
-        const products = await fetchProducts(category); // Fetch products using the API function
+        const products = await fetchProducts(selectedCategory); // Fetch products using the API function
         setImages(products); // Update the state with fetched products
       } catch (error) {
         console.error("Error fetching products:", error);

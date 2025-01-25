@@ -22,7 +22,7 @@ const PremiumCollection = () => {
       }
     };
 
-    if (selectedCategory) fetchProducts();
+    if (selectedCategory) fetchProductsByCategory();
   }, [selectedCategory]);
 
   return (
