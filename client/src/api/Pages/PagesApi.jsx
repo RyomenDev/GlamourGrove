@@ -78,3 +78,14 @@ export const fetchProductById = async (productId) => {
   }
 };
 
+// Fetch related products by category
+export const fetchRelatedProducts = async (categoryName, perPage = 6) => {
+  try {
+    const response = await axios.get(`${baseUrl}/api/product/getAllProducts`, {
+      params: { categoryName, perPage },
+    });
+    return response.data; // Assuming the data contains the related products
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Failed to fetch related products");
+  }
+};
