@@ -9,9 +9,27 @@ const app = express();
 //     credentials: true
 // }))
 
+// app.use(
+//   cors({
+//     origin: process.env.CORS_ORIGIN.replace(/\/$/, ""),
+//     credentials: true,
+//     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+//   })
+// );
+
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN.replace(/\/$/, ""),
+    origin: (origin, callback) => {
+      const allowedOrigins = [
+        process.env.CORS_ORIGIN1.replace(/\/$/, ""),
+        process.env.CORS_ORIGIN2.replace(/\/$/, ""),
+      ];
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error(`Origin ${origin} not allowed by CORS`));
+      }
+    },
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   })
