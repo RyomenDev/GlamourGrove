@@ -1,9 +1,9 @@
-# FashionFleet
+# GlamourGrove
 
 [Visit Now](https://e-commerce-app-kno9.vercel.app) 🚀
 ## Description
 
-FashionFleet is a full-stack web application built with MERN stack, providing users with a seamless shopping experience for clothes. It features user authentication, responsive web design, dark mode/light mode, sections for different clothing categories (men, women, kids), sections for new arrivals and shopping list, advanced search functionality, payment gateway integration with Stripe, user profile management, and an admin dashboard for managing products, orders, users, and comments.
+GlamourGrove is a full-stack web application built with MERN stack, providing users with a seamless shopping experience for clothes. It features user authentication, responsive web design, dark mode/light mode, sections for different clothing categories (men, women, kids), sections for new arrivals and shopping list, advanced search functionality, payment gateway integration with Stripe, user profile management, and an admin dashboard for managing products, orders, users, and comments.
 
 ## Tech Stack
 **Frontend:**
@@ -33,6 +33,7 @@ FashionFleet is a full-stack web application built with MERN stack, providing us
 
 **Deployed On:**
 - ![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+- ![Render](https://img.shields.io/badge/Render-dcdcdc?style=for-the-badge&logo=render&logoColor=black)
 
 ## Features
 

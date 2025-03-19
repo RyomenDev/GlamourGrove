@@ -65,10 +65,10 @@ const Header = () => {
   const { theme } = useSelector((state) => state.theme);
 
   const handleSignOut = async () => {
-    console.log("Logging out");
+    // console.log("Logging out");
 
     // const { accessToken } = useSelector((state) => state.user); // Access token from Redux state
-    console.log("AccessToken:", accessToken);
+    // console.log("AccessToken:", accessToken);
 
     if (!accessToken) {
       console.warn("No access token available. Dispatching sign out locally.");

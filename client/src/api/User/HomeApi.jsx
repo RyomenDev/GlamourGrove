@@ -23,6 +23,7 @@ export const fetchProductsByCategory = async (categoryType) => {
       params: { categoryType },
     });
     // return response.data.products;
+    // console.log( response.data);
     return response.data; // Assuming `data` contains the products
   } catch (error) {
     console.error("Error fetching products:", error);
