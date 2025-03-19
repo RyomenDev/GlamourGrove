@@ -92,6 +92,8 @@ const getProductById = asyncHandler(async (req, res) => {
 });
 
 const getAllProducts = asyncHandler(async (req, res) => {
+  //   console.log("getAllProducts-category");
+
   // const userId = req.user._id;
   // const user = await User.findById({ _id: userId });
 
@@ -111,12 +113,19 @@ const getAllProducts = asyncHandler(async (req, res) => {
 
     // Filter by category name
     if (req.query.categoryName) {
-      query["category.name"] = req.query.categoryName;
+      query["category.name"] =
+        req.query?.categoryName || req.params?.categoryName;
     }
+
+    // console.log("query-Type", req.params.categoryType);
+    // console.log("params-Type", req.query.categoryType);
+    // console.log("query-Name", req.params.categoryName);
+    // console.log("params-Name", req.query.categoryName);
 
     // Filter by category type
     if (req.query.categoryType) {
-      query["category.type"] = req.query.categoryType;
+      query["category.type"] =
+        req.query?.categoryType || req.params?.categoryType;
     }
 
     // Query all products with pagination

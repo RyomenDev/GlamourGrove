@@ -3,6 +3,8 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import jwt from "jsonwebtoken";
+import conf from "../conf/conf.js";
 
 const generateAccessAndRefreshTokens = async (userId) => {
   try {
@@ -216,28 +218,51 @@ const google = asyncHandler(async (req, res) => {
 });
 
 const logoutUser = asyncHandler(async (req, res) => {
-  await User.findByIdAndUpdate(
-    req.user._id,
-    {
-      $unset: {
-        refreshToken: 1, // this removes the field from document
-      },
-    },
-    {
-      new: true,
+  try {
+    const token =
+      req.cookies?.accessToken ||
+      req.header("Authorization")?.replace("Bearer ", "");
+
+    if (token) {
+      try {
+        // Verify token (Ignore expiration errors)
+        const decodedToken = jwt.verify(token, conf.ACCESS_TOKEN_SECRET, {
+          ignoreExpiration: true, // Allow logout even if token is expired
+        });
+
+        if (decodedToken?._id) {
+          await User.findByIdAndUpdate(
+            decodedToken._id,
+            { $unset: { refreshToken: 1 } }, // Remove refreshToken
+            { new: true }
+          );
+        }
+      } catch (error) {
+        console.log("Token verification failed, but proceeding with logout.");
+      }
     }
-  );
 
-  const options = {
-    httpOnly: true,
-    secure: true,
-  };
+    // Clear authentication cookies
+    const options = {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+    };
 
-  return res
-    .status(200)
-    .clearCookie("accessToken", options)
-    .clearCookie("refreshToken", options)
-    .json(new ApiResponse(200, {}, "User logged out"));
+    //   const options = {
+    //     httpOnly: true,
+    //     secure: true,
+    //   };
+
+    return res
+      .status(200)
+      .clearCookie("accessToken", options)
+      .clearCookie("refreshToken", options)
+      .json(new ApiResponse(200, {}, "User logged out successfully"));
+  } catch (error) {
+    console.log("Logout error:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
 });
 
 const refreshAccessToken = asyncHandler(async (req, res) => {
@@ -251,7 +276,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
   try {
     const decodedToken = jwt.verify(
       incomingRefreshToken,
-      process.env.REFRESH_TOKEN_SECRET
+      conf.REFRESH_TOKEN_SECRET
     );
 
     const user = await User.findById(decodedToken?._id);

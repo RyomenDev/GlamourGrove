@@ -1,10 +1,9 @@
 import express from "express";
 import Stripe from "stripe";
-import dotenv from "dotenv";
 import { Order } from "../models/order.model.js";
-dotenv.config();
+import conf from "../conf/conf.js";
 
-const stripe = new Stripe(process.env.STRIPE_KEY);
+const stripe = new Stripe(conf.STRIPE_SECRET_KEY);
 
 const router = express.Router();
 
@@ -85,8 +84,8 @@ router.post("/create-checkout-session", async (req, res) => {
       line_items,
       mode: "payment",
       customer: customer.id,
-      success_url: `${process.env.CLIENT_URL}/checkout-success`,
-      cancel_url: `${process.env.CLIENT_URL}/cart`,
+      success_url: `${conf.CLIENT_URL}/checkout-success`,
+      cancel_url: `${conf.CLIENT_URL}/cart`,
     });
 
     res.send({ url: session.url });

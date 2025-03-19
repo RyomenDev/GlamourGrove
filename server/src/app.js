@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import conf from "./conf/conf.js";
+
 
 const app = express();
 
@@ -21,8 +23,8 @@ app.use(
   cors({
     origin: (origin, callback) => {
       const allowedOrigins = [
-        process.env.CORS_ORIGIN1.replace(/\/$/, ""),
-        process.env.CORS_ORIGIN2.replace(/\/$/, ""),
+        conf.CORS_ORIGIN1.replace(/\/$/, ""),
+        conf.CORS_ORIGIN2.replace(/\/$/, ""),
       ];
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
