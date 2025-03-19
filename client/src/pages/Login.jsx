@@ -11,7 +11,6 @@ import OAuth from "../components/utils/OAuth";
 
 import { loginUser } from "../api/Pages/PagesApi";
 
-
 const Login = () => {
   const [formData, setFormData] = useState({});
   const { loading, error } = useSelector((state) => state.user);
@@ -22,25 +21,25 @@ const Login = () => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      try {
-        dispatch(signInStart());
-        const data = await loginUser(formData); // Call the API function
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      dispatch(signInStart());
+      const data = await loginUser(formData); // Call the API function
 
-        if (data.success === false) {
-          dispatch(signInFailure(data));
-          return;
-        }
-
-        const { user, accessToken } = data.data; // Ensure correct data structure
-        dispatch(signInSuccess({ user, accessToken }));
-        navigate("/");
-      } catch (error) {
-        dispatch(signInFailure(error));
-        console.error("Login error:", error.message);
+      if (data.success === false) {
+        dispatch(signInFailure(data));
+        return;
       }
-    };
+
+      const { user, accessToken } = data.data; // Ensure correct data structure
+      dispatch(signInSuccess({ user, accessToken }));
+      navigate("/");
+    } catch (error) {
+      dispatch(signInFailure(error));
+      console.error("Login error:", error.message);
+    }
+  };
 
   return (
     <div className="py-32 lg:py-44 dark:bg-gray-900">

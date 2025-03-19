@@ -8,6 +8,7 @@ const conf = {
   CORS_ORIGIN1: String(process.env.CORS_ORIGIN1),
   CORS_ORIGIN2: String(process.env.CORS_ORIGIN2),
   CORS_ORIGIN3: String(process.env.CORS_ORIGIN3),
+  ACCESS_TOKEN_SECRET: String(process.env.ACCESS_TOKEN_SECRET),
 };
 
 export default conf;

@@ -15,10 +15,11 @@ const Header = () => {
   const [dropIcon, setDropIcon] = useState(false);
   const [dropIcona, setDropIcona] = useState(false);
   const [dropIconb, setDropIconb] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   const cartItems = useSelector((state) => state.cart.cartItems);
   const location = useLocation();
   const navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = useState("");
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -60,12 +61,20 @@ const Header = () => {
   const { currentUser, loading, error, accessToken } = useSelector(
     (state) => state.user
   );
-  const dispatch = useDispatch();
+
   const { theme } = useSelector((state) => state.theme);
 
   const handleSignOut = async () => {
-    const dispatch = useDispatch();
-    const { accessToken } = useSelector((state) => state.user); // Access token from Redux state
+    console.log("Logging out");
+
+    // const { accessToken } = useSelector((state) => state.user); // Access token from Redux state
+    console.log("AccessToken:", accessToken);
+
+    if (!accessToken) {
+      console.warn("No access token available. Dispatching sign out locally.");
+      dispatch(signOut()); // Local sign-out action if token is unavailable
+      return; // Exit the function early
+    }
 
     try {
       await logoutUser(accessToken); // Call the API function for logout
