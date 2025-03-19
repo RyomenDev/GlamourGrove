@@ -86,11 +86,11 @@ const Header = () => {
   };
 
   return (
-    <nav className="dark:bg-gray-800 bg-gray-100 dark:text-white text-black fixed top-0 left-0 w-full z-50 px-5 py-5 flex justify-between items-center">
+    <nav className="dark:bg-gray-800 bg-gray-200 dark:text-white text-black fixed top-0 left-0 w-full z-50 px-5 py-5 flex justify-between items-center">
       {/* Left section */}
       <div className="flex items-center">
         <Link to="/" className="text-lg font-semibold dark:text-gray-50">
-          FashionFleet
+          GlamourGlove
         </Link>
       </div>
 
@@ -100,7 +100,7 @@ const Header = () => {
           <form onSubmit={handleSubmit}>
             <input
               type="text"
-              className="block w-full md:w-64 lg:w-80 rounded-md bg-gray-50 dark:bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-400 pl-8 py-1"
+              className="block w-full md:w-64 lg:w-80 rounded-md bg-gray-50 dark:bg-gray-700 text-black placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-400 pl-8 py-1"
               placeholder="Search"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
