@@ -98,7 +98,7 @@ const Header = () => {
             alt="Logo"
             className="w-10 h-10 object-contain"
           />
-          <span className="text-xl font-bold tracking-wide">GlamourGlove</span>
+          <span className="text-xl font-bold tracking-wide">GlamorGrove</span>
         </Link>
       </div>
 

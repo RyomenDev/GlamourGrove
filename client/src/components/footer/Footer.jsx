@@ -96,7 +96,7 @@ const Footer = () => {
         <div className="flex items-center lg:justify-center">
           <a href="#">
             <h1 className="font-extrabold text-3xl dark:text-white">
-              GlamourGlove
+              GlamorGrove
             </h1>
           </a>
         </div>
@@ -106,7 +106,7 @@ const Footer = () => {
         <p className="dark:text-gray-400 text-sm sm:order-1">
           © {new Date().getFullYear()}
           <a href="#" target="_blank" className="hover:underline mx-1">
-            GlamourGlove
+            GlamorGrove
           </a>
           All Rights Reserved.
         </p>
