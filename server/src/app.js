@@ -3,7 +3,6 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import conf from "./conf/conf.js";
 
-
 const app = express();
 
 // app.use(cors({
@@ -25,6 +24,7 @@ app.use(
       const allowedOrigins = [
         conf.CORS_ORIGIN1.replace(/\/$/, ""),
         conf.CORS_ORIGIN2.replace(/\/$/, ""),
+        conf.CLIENT_URL.replace(/\/$/, ""),
       ];
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
@@ -48,11 +48,13 @@ import productRouter from "./routes/product.route.js";
 import stripe from "./routes/stripe.js";
 import orderRouter from "./routes/order.route.js";
 import commentRouter from "./routes/comment.route.js";
+import resetpasswordRouter from "./routes/resetpassword.route.js";
 
 app.use("/api/users", userRouter);
 app.use("/api/product", productRouter);
 app.use("/api/stripe", stripe);
 app.use("/api/order", orderRouter);
 app.use("/api/comment", commentRouter);
+app.use("/api/auth", resetpasswordRouter);
 
 export { app };

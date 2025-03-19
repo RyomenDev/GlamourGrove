@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -10,6 +10,10 @@ import {
 import OAuth from "../components/utils/OAuth";
 
 import { loginUser } from "../api/Pages/PagesApi";
+
+import axios from "axios";
+import conf from "../conf/conf.jsx";
+const baseUrl = `${conf.SERVER_API_URL}/api`;
 
 const Login = () => {
   const [formData, setFormData] = useState({});
@@ -40,6 +44,52 @@ const Login = () => {
       console.error("Login error:", error.message);
     }
   };
+
+  const handleForgotPassword = async (e) => {
+    e.preventDefault();
+    if (!formData.email) {
+      alert("Please enter your email before proceeding.");
+      return;
+    }
+    console.log("sending email for resetting");
+
+    try {
+      //   setLoading(true);
+      const response = await axios.post(`${baseUrl}/auth/forgot-password`, {
+        email: formData.email,
+      });
+
+      alert(response.data.message || "Password reset link sent to your email.");
+      //   setLoading(false);
+    } catch (error) {
+        console.log(error.response);
+        
+      alert(error.response?.data?.message || "Failed to send reset email.");
+      //   setLoading(false);
+    }
+  };
+
+  //   const handleForgotPassword = useCallback(
+  //     async (e) => {
+  //       e.preventDefault();
+
+  //       if (!formData.email) {
+  //         alert("Please enter your email before proceeding.");
+  //         return;
+  //       }
+
+  //       try {
+  //         // Add a small delay for better UX
+  //         await new Promise((resolve) => setTimeout(resolve, 500));
+
+  //         // Navigate only after checking email
+  //         navigate("/forgot-password");
+  //       } catch (error) {
+  //         console.error("Error handling forgot password:", error);
+  //       }
+  //     },
+  //     [formData.email, navigate] // Dependencies to avoid re-creating the function
+  //   );
 
   return (
     <>
@@ -114,9 +164,20 @@ const Login = () => {
                   <label className="block text-gray-700 text-sm font-bold mb-2">
                     Password
                   </label>
-                  <a href="#" className="text-xs text-gray-500">
+                  {/* <a
+                    href="#"
+                    onClick={handleForgotPassword}
+                    className="text-xs text-gray-500"
+                  >
                     Forget Password?
-                  </a>
+                  </a> */}
+                  <button
+                    type="button"
+                    onClick={handleForgotPassword}
+                    className="text-xs text-gray-500 underline hover:text-gray-700"
+                  >
+                    Forget Password?
+                  </button>
                 </div>
                 <input
                   className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"

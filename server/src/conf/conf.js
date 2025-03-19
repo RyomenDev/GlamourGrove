@@ -16,6 +16,8 @@ const requiredEnvVars = [
   "REFRESH_TOKEN_EXPIRY",
   "NODE_ENV",
   "CLIENT_URL",
+  "EMAIL_USER",
+  "EMAIL_PASS",
 ];
 
 // Check for missing environment variables
@@ -38,6 +40,8 @@ const conf = {
   REFRESH_TOKEN_EXPIRY: process.env.REFRESH_TOKEN_EXPIRY || "7d", // Default expiry
   NODE_ENV: process.env.NODE_ENV,
   CLIENT_URL: process.env.CLIENT_URL,
+  EMAIL_USER: process.env.EMAIL_USER,
+  EMAIL_PASS: process.env.EMAIL_PASS,
 };
 
 export default conf;

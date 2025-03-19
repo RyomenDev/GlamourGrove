@@ -1,8 +1,10 @@
-import Header from "./components/header/Header"
+import Header from "./components/header/Header";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
+import ResetPassword from "./pages/ResetPassword.jsx";
+// 
 import Product from "./pages/Product";
 import MenProductPage from "./pages/MenProductPage";
 import WomenProductPage from "./pages/WomenProductPage";
@@ -22,41 +24,44 @@ import AutoScroll from "./components/utils/AutoScroll";
 
 
 function App() {
-  
-
   return (
     <BrowserRouter>
-    <AutoScroll />
-    <Header />
-       <Routes>
-       <Route path="/" element={<Home />} />
-       <Route path="/login" element={<Login />} />
-       <Route path="/signup" element={<SignUp />} />
+      <AutoScroll />
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/product/:productId" element={<Product />} />
         <Route path="/products/:productName" element={<MenProductPage />} />
-        <Route path="/products/women/:productName" element={<WomenProductPage />} />
-        <Route path="/products/kids/:productName" element={<KidsProductPage />} /> 
+        <Route
+          path="/products/women/:productName"
+          element={<WomenProductPage />}
+        />
+        <Route
+          path="/products/kids/:productName"
+          element={<KidsProductPage />}
+        />
         <Route path="/shoppingList" element={<ShoppingList />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/admin/products" element={<AdminProduct />} />
         <Route path="/search" element={<AllProducts />} />
         <Route path="/checkout-success" element={<CheckoutSuccess />} />
-        <Route element={<PrivateRoute /> }>
-          <Route path="/dashboard" element={<Dashboard />}/>
+        <Route element={<PrivateRoute />}>
+          <Route path="/dashboard" element={<Dashboard />} />
         </Route>
         <Route element={<OnlyAdminPrivateRoute />}>
           <Route path="/add-product" element={<AddProduct />} />
           <Route path="/product/edit/:productId" element={<EditPage />} />
         </Route>
-      </Routes>     
-      <Footer /> 
+      </Routes>
+      <Footer />
     </BrowserRouter>
-   
-  )
+  );
 }
 
-export default App
-
+export default App;
 
 /*
 <Header />
