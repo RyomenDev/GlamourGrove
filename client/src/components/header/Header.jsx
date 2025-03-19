@@ -88,9 +88,17 @@ const Header = () => {
   return (
     <nav className="dark:bg-gray-800 bg-gray-200 dark:text-white text-black fixed top-0 left-0 w-full z-50 px-5 py-5 flex justify-between items-center">
       {/* Left section */}
-      <div className="flex items-center">
-        <Link to="/" className="text-lg font-semibold dark:text-gray-50">
-          GlamourGlove
+      <div className="flex items-center space-x-2">
+        <Link
+          to="/"
+          className="flex items-center space-x-2 text-lg font-semibold dark:text-gray-50"
+        >
+          <img
+            src="/logo.png"
+            alt="Logo"
+            className="w-10 h-10 object-contain"
+          />
+          <span className="text-xl font-bold tracking-wide">GlamourGlove</span>
         </Link>
       </div>
 
