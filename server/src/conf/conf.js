@@ -18,6 +18,9 @@ const requiredEnvVars = [
   "CLIENT_URL",
   "EMAIL_USER",
   "EMAIL_PASS",
+  "CLOUDINARY_NAME",
+  "CLOUDINARY_KEY",
+  "CLOUDINARY_SECRET",
 ];
 
 // Check for missing environment variables
@@ -42,6 +45,9 @@ const conf = {
   CLIENT_URL: process.env.CLIENT_URL,
   EMAIL_USER: process.env.EMAIL_USER,
   EMAIL_PASS: process.env.EMAIL_PASS,
+  CLOUDINARY_NAME: process.env.CLOUDINARY_NAME,
+  CLOUDINARY_KEY: process.env.CLOUDINARY_KEY,
+  CLOUDINARY_SECRET: process.env.CLOUDINARY_SECRET,
 };
 
 export default conf;

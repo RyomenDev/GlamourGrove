@@ -35,7 +35,7 @@ router.post("/forgot-password", async (req, res) => {
       from: conf.EMAIL_USER,
       subject: "GloamourGrove: Password Reset Request",
       html: `<p>You requested a password reset. Click the link below to reset your password:</p>
-        <a href=${conf.CLIENT_URL}/reset-password/${resetToken}">Reset Password</a>`,
+        <a href="${conf.CLIENT_URL}/reset-password/${resetToken}">Reset Password</a>`,
     };
     console.log("Forget-Password2");
     await transporter.sendMail(mailOptions);
