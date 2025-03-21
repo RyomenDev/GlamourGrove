@@ -1,14 +1,12 @@
 import axios from "axios";
 import conf from "../conf/conf.jsx";
-import { handleApiError } from "../utils/handleApiError";
-import { getHeaders } from "../utils/authUtils";
 
 const SERVER_API_URL = conf.SERVER_API_URL;
 const API_URL = `${SERVER_API_URL}/retellai`;
 
-export const registerCall = async (RETELL_AI_AGENT_ID, navigate) => {
+export const registerCall = async (RETELL_AI_AGENT_ID, accessToken) => {
   try {
-    const headers = await getHeaders();
+    // console.log({accessToken});
 
     const response = await axios.post(
       `${API_URL}/connect-retellai`,
@@ -16,13 +14,20 @@ export const registerCall = async (RETELL_AI_AGENT_ID, navigate) => {
         agent_id: RETELL_AI_AGENT_ID,
       },
       {
-        headers,
+        // headers,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "multipart/form-data",
+        },
       }
     );
 
     // Axios response data is automatically parsed
     return response.data;
   } catch (error) {
-    handleApiError(error, navigate);
+    console.log("Error in registerCall:", error.message);
+    throw new Error(
+      error?.message || error.response?.data?.message || "Not able to connect"
+    );
   }
 };

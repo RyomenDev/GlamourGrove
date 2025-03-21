@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import { RetellWebClient } from "retell-client-js-sdk";
 import { registerCall } from "../api/retellAi.jsx";
 import { FaPhoneAlt } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import { handleApiError } from "../utils/handleApiError";
 import conf from "../conf/retellAi-conf.jsx";
+import { useSelector } from "react-redux";
 
 import activeBot from "../assets/activeBot.png";
 import inActiveBot from "../assets/inActiveBot.png";
@@ -14,7 +13,8 @@ const retellWebClient = new RetellWebClient();
 
 const RetellAi = () => {
   const [isCalling, setIsCalling] = useState(false);
-  const navigate = useNavigate();
+  const { accessToken } = useSelector((state) => state.user);
+  const token = accessToken || localStorage.getItem("access_token");
 
   // Initialize the SDK
   useEffect(() => {
@@ -77,7 +77,7 @@ const RetellAi = () => {
         // Register the call and get the access token
         const registerCallResponse = await registerCall(
           RETELL_AI_AGENT_ID,
-          navigate
+          token
         );
 
         if (registerCallResponse.access_token) {
@@ -88,14 +88,16 @@ const RetellAi = () => {
             })
             .catch((error) => {
               // Handle errors related to starting the call
-              handleApiError(error, navigate);
+            //   console.error("Error adding product:", error.message);
+              alert("Failed to Connect: " + error.message);
             });
 
           setIsCalling(true);
         }
       } catch (error) {
         // Handle API errors during call registration
-        handleApiError(error, navigate);
+        // console.error("Error adding product:", error.message);
+        alert("Failed to Connect: " + error.message);
       }
     }
   };
