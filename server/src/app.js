@@ -2,8 +2,18 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import conf from "./conf/conf.js";
+import bodyParser from "body-parser";
+import helmet from "helmet";
 
 const app = express();
+app.use(bodyParser.json());
+
+// Apply security headers using Helmet
+app.use(
+  helmet({
+    contentSecurityPolicy: false, 
+  })
+);
 
 // app.use(cors({
 //     origin: process.env.CORS_ORIGIN,
@@ -36,6 +46,20 @@ app.use(
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   })
 );
+
+// Additional security headers
+app.disable("x-powered-by");
+app.use((req, res, next) => {
+  res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("X-XSS-Protection", "1; mode=block");
+  res.setHeader(
+    "Strict-Transport-Security",
+    "max-age=31536000; includeSubDomains; preload"
+  );
+  next();
+});
+
 
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
