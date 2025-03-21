@@ -4,7 +4,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import ResetPassword from "./pages/ResetPassword.jsx";
-// 
+//
 import Product from "./pages/Product";
 import MenProductPage from "./pages/MenProductPage";
 import WomenProductPage from "./pages/WomenProductPage";
@@ -21,7 +21,8 @@ import EditPage from "./pages/admin/EditPage";
 import CheckoutSuccess from "./pages/CheckoutSuccess";
 import PrivateRoute from "./components/utils/PrivateRoute";
 import AutoScroll from "./components/utils/AutoScroll";
-
+//  Retell AI
+import RetellAI from "./RetellAi/RetellAIConnect";
 
 function App() {
   return (
@@ -57,6 +58,10 @@ function App() {
         </Route>
       </Routes>
       <Footer />
+      {/* RetellAI Floating Component */}
+      <div className="fixed bottom-6 right-2 z-50">
+        <RetellAI />
+      </div>
     </BrowserRouter>
   );
 }
