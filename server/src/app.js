@@ -73,6 +73,7 @@ import stripe from "./routes/stripe.js";
 import orderRouter from "./routes/order.route.js";
 import commentRouter from "./routes/comment.route.js";
 import resetpasswordRouter from "./routes/resetpassword.route.js";
+import retellai from "./routes/retellai.routes.js";
 
 app.use("/api/users", userRouter);
 app.use("/api/product", productRouter);
@@ -80,5 +81,6 @@ app.use("/api/stripe", stripe);
 app.use("/api/order", orderRouter);
 app.use("/api/comment", commentRouter);
 app.use("/api/auth", resetpasswordRouter);
+app.use("/api/retellai", retellai);
 
 export { app };

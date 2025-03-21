@@ -19,12 +19,12 @@ const RetellAi = () => {
   // Initialize the SDK
   useEffect(() => {
     retellWebClient.on("call_started", () => {
-      //   console.log("call started");
+      console.log("call started");
       // OTHER EFFECTS
     });
 
     retellWebClient.on("call_ended", () => {
-      //   console.log("call ended");
+      console.log("call ended");
       // OTHER EFFECTS
       setIsCalling(false);
     });
@@ -74,6 +74,10 @@ const RetellAi = () => {
       setIsCalling(false);
     } else {
       try {
+        console.log("calling");
+        if (!RETELL_AI_AGENT_ID) {
+          throw new Error("RETELL_AI_AGENT_ID is missing or undefined");
+        }
         // Register the call and get the access token
         const registerCallResponse = await registerCall(
           RETELL_AI_AGENT_ID,
@@ -88,7 +92,7 @@ const RetellAi = () => {
             })
             .catch((error) => {
               // Handle errors related to starting the call
-            //   console.error("Error adding product:", error.message);
+              //   console.error("Error adding product:", error.message);
               alert("Failed to Connect: " + error.message);
             });
 
