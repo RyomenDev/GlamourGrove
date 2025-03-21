@@ -68,12 +68,14 @@ const getProductsByCategoryType = asyncHandler(async (req, res) => {
 });
 
 const getProductById = asyncHandler(async (req, res) => {
-  //   console.log("hi there", req.params);
+//   console.log("hi there", req.params);
 
   const { productId } = req.params;
   //   console.log("productId", productId);
 
   const product = await Product.findById({ _id: productId });
+
+//   console.log({ product });
 
   if (!product) {
     throw new ApiError(401, "Product not found");
