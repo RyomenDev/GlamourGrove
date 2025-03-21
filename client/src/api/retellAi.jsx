@@ -6,8 +6,8 @@ const API_URL = `${SERVER_API_URL}/api/retellai`;
 
 export const registerCall = async (RETELL_AI_AGENT_ID, accessToken) => {
   try {
-    console.log({ accessToken });
-    console.log({ RETELL_AI_AGENT_ID });
+    // console.log({ accessToken });
+    // console.log({ RETELL_AI_AGENT_ID });
 
     const response = await axios.post(
       `${API_URL}/connect-retellai`,
